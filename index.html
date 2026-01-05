@@ -344,7 +344,7 @@
             const now = new Date();
 
             document.querySelectorAll('.days-left[data-date]').forEach(el => {
-                const examDate = new Date(el.dataset.date + 'T00:00:00');
+                const examDate = new Date(el.dataset.date + 'T14:00:00');
                 const diff = examDate - now;
                 const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
@@ -360,7 +360,7 @@
             });
 
             document.querySelectorAll('.exam-countdown[data-date]').forEach(el => {
-                const examDate = new Date(el.dataset.date + 'T00:00:00');
+                const examDate = new Date(el.dataset.date + 'T14:00:00');
                 const diff = examDate - now;
 
                 if (diff < 0) {
@@ -376,7 +376,7 @@
             // Update next exam countdown
             let nextExam = null;
             for (let exam of exams) {
-                const examDate = new Date(exam.date + 'T00:00:00');
+                const examDate = new Date(exam.date + 'T14:00:00');
                 if (examDate > now) {
                     nextExam = exam;
                     break;
@@ -387,7 +387,7 @@
             const nextName = document.getElementById('next-exam-name');
 
             if (nextExam) {
-                const examDate = new Date(nextExam.date + 'T00:00:00');
+                const examDate = new Date(nextExam.date + 'T14:00:00');
                 const diff = examDate - now;
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
