@@ -3,9 +3,462 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Neel's CA Inter Exam Schedule - Jan 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #e94560, #f39c12, #00d9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1em;
+        }
+
+        .countdown-main {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #e94560, #f39c12);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .countdown-main h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        #next-exam-countdown {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .exam-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+        }
+
+        .exam-card:hover {
+            transform: translateX(10px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .exam-card.completed {
+            opacity: 0.5;
+            border-left-color: #2ecc71 !important;
+        }
+
+        .exam-card.completed .status-badge {
+            background: #2ecc71;
+        }
+
+        .exam-card.active {
+            animation: pulse 2s infinite;
+            border-left-color: #e94560 !important;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.4); }
+            50% { box-shadow: 0 0 20px 10px rgba(233, 69, 96, 0.2); }
+        }
+
+        .exam-info {
+            flex: 1;
+        }
+
+        .exam-date {
+            font-size: 0.9em;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .exam-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .exam-countdown {
+            font-size: 0.95em;
+            color: #00d9ff;
+        }
+
+        .exam-right {
+            text-align: right;
+        }
+
+        .days-left {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .days-label {
+            font-size: 0.8em;
+            color: #aaa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+
+        .progress-container {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #00d9ff);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .motivation {
+            text-align: center;
+            padding: 30px;
+            margin-top: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            font-style: italic;
+            color: #aaa;
+        }
+
+        .motivation span {
+            font-size: 1.3em;
+            color: #f39c12;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        /* Color coding for subjects */
+        .accounts { border-left-color: #3498db; }
+        .accounts .days-left { color: #3498db; }
+
+        .law { border-left-color: #9b59b6; }
+        .law .days-left { color: #9b59b6; }
+
+        .tax { border-left-color: #e74c3c; }
+        .tax .days-left { color: #e74c3c; }
+
+        .fmsm { border-left-color: #f39c12; }
+        .fmsm .days-left { color: #f39c12; }
+
+        .audit { border-left-color: #1abc9c; }
+        .audit .days-left { color: #1abc9c; }
+
+        .checkbox-container {
+            margin-right: 20px;
+        }
+
+        .checkbox-container input {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8em; }
+            .exam-card { flex-direction: column; text-align: center; }
+            .exam-right { margin-top: 15px; }
+            .days-left { font-size: 2em; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+    <div class="container">
+        <header>
+            <h1>Neel's CA Inter Exams</h1>
+            <p class="subtitle">January 2026 Attempt - You've Got This!</p>
+        </header>
+
+        <div class="countdown-main">
+            <h2>⏰ Next Exam In:</h2>
+            <div id="next-exam-countdown">Loading...</div>
+            <div id="next-exam-name"></div>
+        </div>
+
+        <div class="exams-list">
+            <div class="exam-card accounts" data-date="2026-01-06" onclick="toggleComplete(this)">
+                <div class="checkbox-container">
+                    <input type="checkbox" onclick="event.stopPropagation(); toggleComplete(this.parentElement.parentElement)">
+                </div>
+                <div class="exam-info">
+                    <div class="exam-date">📅 Tuesday, 6th January 2026</div>
+                    <div class="exam-name">Accounting</div>
+                    <div class="exam-countdown" data-date="2026-01-06"></div>
+                </div>
+                <div class="exam-right">
+                    <div class="days-left" data-date="2026-01-06">--</div>
+                    <div class="days-label">days left</div>
+                </div>
+            </div>
+
+            <div class="exam-card law" data-date="2026-01-08" onclick="toggleComplete(this)">
+                <div class="checkbox-container">
+                    <input type="checkbox" onclick="event.stopPropagation(); toggleComplete(this.parentElement.parentElement)">
+                </div>
+                <div class="exam-info">
+                    <div class="exam-date">📅 Thursday, 8th January 2026</div>
+                    <div class="exam-name">Corporate & Other Laws</div>
+                    <div class="exam-countdown" data-date="2026-01-08"></div>
+                </div>
+                <div class="exam-right">
+                    <div class="days-left" data-date="2026-01-08">--</div>
+                    <div class="days-label">days left</div>
+                </div>
+            </div>
+
+            <div class="exam-card tax" data-date="2026-01-10" onclick="toggleComplete(this)">
+                <div class="checkbox-container">
+                    <input type="checkbox" onclick="event.stopPropagation(); toggleComplete(this.parentElement.parentElement)">
+                </div>
+                <div class="exam-info">
+                    <div class="exam-date">📅 Saturday, 10th January 2026</div>
+                    <div class="exam-name">Taxation</div>
+                    <div class="exam-countdown" data-date="2026-01-10"></div>
+                </div>
+                <div class="exam-right">
+                    <div class="days-left" data-date="2026-01-10">--</div>
+                    <div class="days-label">days left</div>
+                </div>
+            </div>
+
+            <div class="exam-card fmsm" data-date="2026-01-17" onclick="toggleComplete(this)">
+                <div class="checkbox-container">
+                    <input type="checkbox" onclick="event.stopPropagation(); toggleComplete(this.parentElement.parentElement)">
+                </div>
+                <div class="exam-info">
+                    <div class="exam-date">📅 Saturday, 17th January 2026</div>
+                    <div class="exam-name">FM & SM</div>
+                    <div class="exam-countdown" data-date="2026-01-17"></div>
+                </div>
+                <div class="exam-right">
+                    <div class="days-left" data-date="2026-01-17">--</div>
+                    <div class="days-label">days left</div>
+                </div>
+            </div>
+
+            <div class="exam-card audit" data-date="2026-01-19" onclick="toggleComplete(this)">
+                <div class="checkbox-container">
+                    <input type="checkbox" onclick="event.stopPropagation(); toggleComplete(this.parentElement.parentElement)">
+                </div>
+                <div class="exam-info">
+                    <div class="exam-date">📅 Monday, 19th January 2026</div>
+                    <div class="exam-name">Auditing & Assurance</div>
+                    <div class="exam-countdown" data-date="2026-01-19"></div>
+                </div>
+                <div class="exam-right">
+                    <div class="days-left" data-date="2026-01-19">--</div>
+                    <div class="days-label">days left</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <h3>📊 Exam Progress</h3>
+            <p style="color: #aaa; margin-top: 5px;"><span id="completed-count">0</span>/5 exams completed</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <div class="motivation">
+            <span>"Success is not final, failure is not fatal: it is the courage to continue that counts."</span>
+            <p style="margin-top: 15px;">All the best, Neel! 🌟</p>
+        </div>
+
+        <footer>
+            <p>Click on an exam card to mark as completed | Made with ❤️ for Neel</p>
+        </footer>
+    </div>
+
+    <script>
+        const exams = [
+            { date: '2026-01-06', name: 'Accounting' },
+            { date: '2026-01-08', name: 'Corporate & Other Laws' },
+            { date: '2026-01-10', name: 'Taxation' },
+            { date: '2026-01-17', name: 'FM & SM' },
+            { date: '2026-01-19', name: 'Auditing & Assurance' }
+        ];
+
+        function updateCountdowns() {
+            const now = new Date();
+
+            document.querySelectorAll('.days-left[data-date]').forEach(el => {
+                const examDate = new Date(el.dataset.date + 'T00:00:00');
+                const diff = examDate - now;
+                const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+                if (days < 0) {
+                    el.textContent = 'Done';
+                    el.nextElementSibling.textContent = '';
+                } else if (days === 0) {
+                    el.textContent = 'TODAY';
+                    el.nextElementSibling.textContent = '🔥';
+                } else {
+                    el.textContent = days;
+                }
+            });
+
+            document.querySelectorAll('.exam-countdown[data-date]').forEach(el => {
+                const examDate = new Date(el.dataset.date + 'T00:00:00');
+                const diff = examDate - now;
+
+                if (diff < 0) {
+                    el.textContent = 'Exam completed';
+                } else {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    el.textContent = `⏱️ ${days}d ${hours}h ${mins}m remaining`;
+                }
+            });
+
+            // Update next exam countdown
+            let nextExam = null;
+            for (let exam of exams) {
+                const examDate = new Date(exam.date + 'T00:00:00');
+                if (examDate > now) {
+                    nextExam = exam;
+                    break;
+                }
+            }
+
+            const nextCountdown = document.getElementById('next-exam-countdown');
+            const nextName = document.getElementById('next-exam-name');
+
+            if (nextExam) {
+                const examDate = new Date(nextExam.date + 'T00:00:00');
+                const diff = examDate - now;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                nextCountdown.textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
+                nextName.textContent = `📚 ${nextExam.name}`;
+            } else {
+                nextCountdown.textContent = '🎉 All Done!';
+                nextName.textContent = 'Congratulations!';
+            }
+
+            // Highlight active/upcoming exam
+            document.querySelectorAll('.exam-card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            if (nextExam) {
+                const activeCard = document.querySelector(`.exam-card[data-date="${nextExam.date}"]`);
+                if (activeCard && !activeCard.classList.contains('completed')) {
+                    activeCard.classList.add('active');
+                }
+            }
+        }
+
+        function toggleComplete(card) {
+            card.classList.toggle('completed');
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            checkbox.checked = card.classList.contains('completed');
+            updateProgress();
+            saveState();
+        }
+
+        function updateProgress() {
+            const total = document.querySelectorAll('.exam-card').length;
+            const completed = document.querySelectorAll('.exam-card.completed').length;
+            const percentage = (completed / total) * 100;
+
+            document.getElementById('progress-fill').style.width = percentage + '%';
+            document.getElementById('completed-count').textContent = completed;
+        }
+
+        function saveState() {
+            const completed = [];
+            document.querySelectorAll('.exam-card').forEach((card, index) => {
+                if (card.classList.contains('completed')) {
+                    completed.push(index);
+                }
+            });
+            localStorage.setItem('neel-ca-exams', JSON.stringify(completed));
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('neel-ca-exams');
+            if (saved) {
+                const completed = JSON.parse(saved);
+                document.querySelectorAll('.exam-card').forEach((card, index) => {
+                    if (completed.includes(index)) {
+                        card.classList.add('completed');
+                        card.querySelector('input[type="checkbox"]').checked = true;
+                    }
+                });
+                updateProgress();
+            }
+        }
+
+        // Initialize
+        loadState();
+        updateCountdowns();
+        setInterval(updateCountdowns, 1000);
+    </script>
 </body>
 </html>
