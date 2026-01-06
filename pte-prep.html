@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khushi's PTE Prep - Complete Study Hub</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+        }
+        .navbar {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; backdrop-filter: blur(10px);
+        }
+        .logo {
+            font-size: 1.5em; font-weight: bold;
+            background: linear-gradient(90deg, #e94560, #f39c12);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 15px; list-style: none; flex-wrap: wrap; }
+        .nav-links a {
+            color: #fff; text-decoration: none; padding: 8px 16px;
+            border-radius: 20px; transition: all 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { background: #e94560; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px 20px; }
+        .header {
+            text-align: center; padding: 40px;
+            background: rgba(255,255,255,0.05); border-radius: 20px; margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 2.5em; margin-bottom: 10px;
+            background: linear-gradient(90deg, #e94560, #f39c12, #00d9ff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .section { display: none; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .card {
+            background: rgba(255,255,255,0.08); border-radius: 15px;
+            padding: 25px; margin-bottom: 20px; border-left: 4px solid #e94560;
+        }
+        .card h3 { color: #e94560; margin-bottom: 15px; }
+        .tips-box {
+            background: rgba(233, 69, 96, 0.1); border-radius: 10px;
+            padding: 20px; margin: 15px 0;
+        }
+        .tips-box h4 { color: #f39c12; margin-bottom: 10px; }
+        .tips-box ul { padding-left: 20px; }
+        .tips-box li { margin-bottom: 8px; color: #ccc; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card {
+            background: rgba(255,255,255,0.1); padding: 25px;
+            border-radius: 15px; text-align: center;
+        }
+        .stat-number { font-size: 2.5em; font-weight: bold; color: #e94560; }
+        .stat-label { color: #aaa; }
+        .accordion { background: rgba(255,255,255,0.05); border-radius: 10px; margin-bottom: 10px; }
+        .accordion-header {
+            padding: 20px; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .accordion-header:hover { background: rgba(255,255,255,0.05); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s; padding: 0 20px; }
+        .accordion.open .accordion-content { max-height: 5000px; padding: 20px; }
+        .question {
+            background: rgba(255,255,255,0.05); padding: 20px;
+            border-radius: 10px; margin-bottom: 15px;
+        }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option {
+            padding: 12px 20px; background: rgba(255,255,255,0.08);
+            border-radius: 8px; cursor: pointer; transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .option:hover { background: rgba(233, 69, 96, 0.2); }
+        .option.selected { border-color: #e94560; }
+        .option.correct { background: rgba(46, 204, 113, 0.3); border-color: #2ecc71; }
+        .option.incorrect { background: rgba(231, 76, 60, 0.3); border-color: #e74c3c; }
+        .btn {
+            padding: 12px 30px; border: none; border-radius: 25px;
+            cursor: pointer; font-size: 1em; margin: 5px; transition: all 0.3s;
+        }
+        .btn-primary { background: #e94560; color: #fff; }
+        .btn-primary:hover { background: #f39c12; }
+        .btn-secondary { background: transparent; border: 2px solid #e94560; color: #e94560; }
+        textarea {
+            width: 100%; min-height: 150px; padding: 15px;
+            background: rgba(255,255,255,0.08); border: 2px solid rgba(233, 69, 96, 0.3);
+            border-radius: 10px; color: #fff; font-size: 1em;
+        }
+        textarea:focus { outline: none; border-color: #e94560; }
+        .word-count { background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 8px; display: inline-block; margin: 10px 0; }
+        .vocab-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .vocab-item { background: rgba(255,255,255,0.08); padding: 15px; border-radius: 10px; border-left: 3px solid #e94560; }
+        .vocab-word { font-weight: bold; color: #e94560; }
+        .vocab-meaning { color: #aaa; font-size: 0.9em; margin-top: 5px; }
+        .timer { font-size: 2em; text-align: center; padding: 20px; background: rgba(231, 76, 60, 0.2); border-radius: 10px; margin-bottom: 20px; }
+        .score-display { text-align: center; padding: 30px; background: rgba(46, 204, 113, 0.2); border-radius: 15px; margin: 20px 0; }
+        .score-display h2 { font-size: 3em; color: #2ecc71; }
+        .checklist { list-style: none; }
+        .checklist li {
+            padding: 12px 15px; background: rgba(255,255,255,0.05);
+            margin-bottom: 8px; border-radius: 8px; cursor: pointer;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .checklist li.checked { background: rgba(46, 204, 113, 0.2); text-decoration: line-through; color: #888; }
+        .check-icon { width: 20px; height: 20px; border: 2px solid #e94560; border-radius: 50%; }
+        .checklist li.checked .check-icon { background: #2ecc71; border-color: #2ecc71; }
+        .highlight { background: rgba(233, 69, 96, 0.3); padding: 2px 6px; border-radius: 3px; }
+        .passage { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; line-height: 1.8; margin-bottom: 15px; }
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 10px; }
+            .header h1 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Khushi's PTE Prep</div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" onclick="showSection('dashboard')">Dashboard</a></li>
+            <li><a href="#" onclick="showSection('speaking')">Speaking</a></li>
+            <li><a href="#" onclick="showSection('writing')">Writing</a></li>
+            <li><a href="#" onclick="showSection('reading')">Reading</a></li>
+            <li><a href="#" onclick="showSection('listening')">Listening</a></li>
+            <li><a href="#" onclick="showSection('mock')">Mock Exams</a></li>
+            <li><a href="#" onclick="showSection('quiz')">Quizzes</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h1>Welcome, Khushi!</h1>
+            <p>Your complete PTE Academic preparation hub - Let's achieve 79+ together!</p>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="dashboard" class="section active">
+            <div class="dashboard">
+                <div class="stat-card">
+                    <div class="stat-number" id="studyDays">0</div>
+                    <div class="stat-label">Days Studied</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="quizzesDone">0</div>
+                    <div class="stat-label">Quizzes Done</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="mockScore">--</div>
+                    <div class="stat-label">Best Mock Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">79+</div>
+                    <div class="stat-label">Target Score</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Daily Study Checklist</h3>
+                <ul class="checklist" id="dailyChecklist">
+                    <li onclick="toggleCheck(this)"><span class="check-icon"></span>Practice 5 Read Aloud passages</li>
+                    <li onclick="toggleCheck(this)"><span class="check-icon"></span>Complete 1 Summarize Written Text</li>
+                    <li onclick="toggleCheck(this)"><span class="check-icon"></span>Practice Re-order Paragraphs</li>
+                    <li onclick="toggleCheck(this)"><span class="check-icon"></span>Do 10 Write from Dictation</li>
+                    <li onclick="toggleCheck(this)"><span class="check-icon"></span>Take a vocabulary quiz</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>PTE Score Bands</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div style="background: rgba(46, 204, 113, 0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 1.3em; font-weight: bold; color: #2ecc71;">79-90</div>
+                        <div style="color: #aaa; font-size: 0.85em;">Expert</div>
+                    </div>
+                    <div style="background: rgba(52, 152, 219, 0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 1.3em; font-weight: bold; color: #3498db;">65-78</div>
+                        <div style="color: #aaa; font-size: 0.85em;">Very Good</div>
+                    </div>
+                    <div style="background: rgba(241, 196, 15, 0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 1.3em; font-weight: bold; color: #f1c40f;">50-64</div>
+                        <div style="color: #aaa; font-size: 0.85em;">Good</div>
+                    </div>
+                    <div style="background: rgba(230, 126, 34, 0.2); padding: 15px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 1.3em; font-weight: bold; color: #e67e22;">36-49</div>
+                        <div style="color: #aaa; font-size: 0.85em;">Intermediate</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Weekly Study Plan</h3>
+                <div style="display: grid; gap: 10px; margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <strong style="color: #e94560;">Monday</strong>
+                        <span>Speaking: Read Aloud, Repeat Sentence</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <strong style="color: #f39c12;">Tuesday</strong>
+                        <span>Writing: Essay + Summarize Written Text</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <strong style="color: #2ecc71;">Wednesday</strong>
+                        <span>Reading: Re-order, Fill in Blanks</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <strong style="color: #3498db;">Thursday</strong>
+                        <span>Listening: Write from Dictation</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <strong style="color: #9b59b6;">Friday</strong>
+                        <span>Mixed Practice - All sections</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                        <strong style="color: #e74c3c;">Weekend</strong>
+                        <span>Full Mock Test + Review</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPEAKING SECTION -->
+        <div id="speaking" class="section">
+            <div class="card">
+                <h3>Speaking Section Overview</h3>
+                <p>The Speaking section tests your ability to speak English clearly. Focus on fluency, pronunciation, and content.</p>
+                <div class="tips-box">
+                    <h4>General Speaking Tips</h4>
+                    <ul>
+                        <li>Speak at a natural pace - not too fast, not too slow</li>
+                        <li>Use proper intonation and stress patterns</li>
+                        <li>Don't restart - keep going even if you make mistakes</li>
+                        <li>Practice with a microphone daily</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion open">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>1. Read Aloud (6-7 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Read a text aloud (30-40 seconds preparation, 40 seconds to read)</p>
+                    <div class="tips-box">
+                        <h4>Strategies</h4>
+                        <ul>
+                            <li>Use prep time to identify difficult words</li>
+                            <li>Mark natural pauses at commas and periods</li>
+                            <li>Stress important words (nouns, verbs, adjectives)</li>
+                            <li>Maintain steady pace throughout</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">Practice Passages</h4>
+                    <div class="question">
+                        <p class="passage">Climate change represents one of the most significant challenges facing humanity today. Scientists have documented rising global temperatures, melting ice caps, and increasingly severe weather patterns. The consequences of inaction could be catastrophic for future generations.</p>
+                        <button class="btn btn-primary" onclick="startReadAloud(this)">Start Practice (40s prep)</button>
+                    </div>
+                    <div class="question">
+                        <p class="passage">The development of artificial intelligence has transformed numerous industries, from healthcare to transportation. Machine learning algorithms can now diagnose diseases, predict market trends, and even create artistic works. However, these advances also raise important ethical questions.</p>
+                        <button class="btn btn-primary" onclick="startReadAloud(this)">Start Practice (40s prep)</button>
+                    </div>
+                    <div class="question">
+                        <p class="passage">Universities play a crucial role in advancing knowledge and preparing students for professional careers. Through research and teaching, academic institutions contribute to economic development and social progress in communities worldwide.</p>
+                        <button class="btn btn-primary" onclick="startReadAloud(this)">Start Practice (40s prep)</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>2. Repeat Sentence (10-12 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Listen and repeat exactly what you hear</p>
+                    <div class="tips-box">
+                        <h4>Strategies</h4>
+                        <ul>
+                            <li>Focus on meaning, not just individual words</li>
+                            <li>Start speaking immediately after audio ends</li>
+                            <li>If you forget part, say what you remember confidently</li>
+                            <li>Maintain the same intonation as original</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">Practice Sentences (memorize then repeat)</h4>
+                    <div class="question"><p>"The assignment must be submitted by the end of the week."</p></div>
+                    <div class="question"><p>"Students should reference their sources in the bibliography."</p></div>
+                    <div class="question"><p>"The research findings have significant implications for public health."</p></div>
+                    <div class="question"><p>"Economic growth depends on innovation and sustainable practices."</p></div>
+                    <div class="question"><p>"The library offers extensive resources for academic research."</p></div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>3. Describe Image (3-4 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Describe an image in 40 seconds (25s prep time)</p>
+                    <div class="tips-box">
+                        <h4>Template</h4>
+                        <ul>
+                            <li><strong>Intro:</strong> "This image/graph shows..."</li>
+                            <li><strong>Key feature:</strong> "The most significant feature is..."</li>
+                            <li><strong>Details:</strong> "We can also see that..."</li>
+                            <li><strong>Trends:</strong> "There is an increase/decrease in..."</li>
+                            <li><strong>Conclusion:</strong> "In conclusion, this image demonstrates..."</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">Useful Vocabulary</h4>
+                    <div class="vocab-list">
+                        <div class="vocab-item"><div class="vocab-word">Dramatically</div><div class="vocab-meaning">For large changes</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Steadily</div><div class="vocab-meaning">Consistent trend</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Peaked</div><div class="vocab-meaning">Reached highest</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Fluctuated</div><div class="vocab-meaning">Went up and down</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Approximately</div><div class="vocab-meaning">About/around</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Predominantly</div><div class="vocab-meaning">Mainly</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>4. Re-tell Lecture (1-2 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Listen to lecture, take notes, re-tell in 40 seconds</p>
+                    <div class="tips-box">
+                        <h4>Note-Taking Tips</h4>
+                        <ul>
+                            <li>Write keywords, not full sentences</li>
+                            <li>Note the main topic immediately</li>
+                            <li>Capture 3-4 key points</li>
+                            <li>Listen for examples</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <h4>Speaking Template</h4>
+                        <p>"The lecture discusses [TOPIC]. The speaker explains that [POINT 1]. Additionally, [POINT 2]. Furthermore, [POINT 3]. In conclusion, [SUMMARY]."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>5. Answer Short Question (5-6 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Answer with 1-3 words</p>
+                    <h4 style="margin-top: 15px;">Practice Questions</h4>
+                    <div class="question">
+                        <p><strong>Q:</strong> What do you call a person who writes books?</p>
+                        <p style="color: #e94560;"><strong>A:</strong> <span onclick="this.textContent='Author'">Click to reveal</span></p>
+                    </div>
+                    <div class="question">
+                        <p><strong>Q:</strong> What is the frozen form of water?</p>
+                        <p style="color: #e94560;"><strong>A:</strong> <span onclick="this.textContent='Ice'">Click to reveal</span></p>
+                    </div>
+                    <div class="question">
+                        <p><strong>Q:</strong> What device measures temperature?</p>
+                        <p style="color: #e94560;"><strong>A:</strong> <span onclick="this.textContent='Thermometer'">Click to reveal</span></p>
+                    </div>
+                    <div class="question">
+                        <p><strong>Q:</strong> What do bees produce?</p>
+                        <p style="color: #e94560;"><strong>A:</strong> <span onclick="this.textContent='Honey'">Click to reveal</span></p>
+                    </div>
+                    <div class="question">
+                        <p><strong>Q:</strong> What is the study of living things called?</p>
+                        <p style="color: #e94560;"><strong>A:</strong> <span onclick="this.textContent='Biology'">Click to reveal</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WRITING SECTION -->
+        <div id="writing" class="section">
+            <div class="card">
+                <h3>Writing Section Overview</h3>
+                <p>The Writing section tests your ability to write academic English. Two task types: Summarize Written Text and Write Essay.</p>
+            </div>
+
+            <div class="accordion open">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>1. Summarize Written Text (1-2 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Write ONE sentence summary (10 minutes, 5-75 words)</p>
+                    <div class="tips-box">
+                        <h4>Key Strategies</h4>
+                        <ul>
+                            <li>Identify main idea + 2-3 supporting points</li>
+                            <li>Use connectors: which, that, while, although, because</li>
+                            <li>Keep it as ONE grammatically correct sentence</li>
+                            <li>Aim for 30-50 words</li>
+                            <li>Paraphrase - don't copy directly</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">Useful Connectors</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0;">
+                        <span class="highlight">which</span>
+                        <span class="highlight">that</span>
+                        <span class="highlight">while</span>
+                        <span class="highlight">whereas</span>
+                        <span class="highlight">although</span>
+                        <span class="highlight">because</span>
+                        <span class="highlight">therefore</span>
+                        <span class="highlight">however</span>
+                        <span class="highlight">moreover</span>
+                        <span class="highlight">consequently</span>
+                    </div>
+                    <h4 style="margin-top: 20px;">Practice Task</h4>
+                    <div class="question">
+                        <p class="passage">Social media has revolutionized the way people communicate and share information. Platforms like Facebook, Twitter, and Instagram have connected billions of users worldwide, enabling instant communication across geographical boundaries. However, this digital revolution has also raised concerns about privacy, mental health, and the spread of misinformation. Studies have shown that excessive social media use can lead to anxiety, depression, and decreased attention spans, particularly among young users.</p>
+                        <textarea placeholder="Write your one-sentence summary here..." oninput="updateWordCount(this)"></textarea>
+                        <div class="word-count">Words: <span>0</span>/75</div>
+                        <button class="btn btn-primary" onclick="showAnswer(this, 'Social media has transformed global communication by connecting billions of users instantly, although it has also raised significant concerns about privacy, mental health impacts including anxiety and depression, and the widespread dissemination of misinformation, especially among younger users.')">Show Sample</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>2. Write Essay (1-2 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Write 200-300 word essay (20 minutes)</p>
+                    <div class="tips-box">
+                        <h4>Essay Structure</h4>
+                        <ul>
+                            <li><strong>Introduction (40-50 words):</strong> Hook + Thesis</li>
+                            <li><strong>Body 1 (70-90 words):</strong> Topic + Explanation + Example</li>
+                            <li><strong>Body 2 (70-90 words):</strong> Topic + Explanation + Example</li>
+                            <li><strong>Conclusion (40-50 words):</strong> Restate + Final thought</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">High-Scoring Vocabulary</h4>
+                    <div class="vocab-list">
+                        <div class="vocab-item"><div class="vocab-word">Furthermore</div><div class="vocab-meaning">To add info</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Nevertheless</div><div class="vocab-meaning">Despite that</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Consequently</div><div class="vocab-meaning">As a result</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Paramount</div><div class="vocab-meaning">Most important</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Substantial</div><div class="vocab-meaning">Significant</div></div>
+                        <div class="vocab-item"><div class="vocab-word">Predominantly</div><div class="vocab-meaning">Mainly</div></div>
+                    </div>
+                    <h4 style="margin-top: 20px;">Practice Topics</h4>
+                    <div class="question">
+                        <p><strong>Topic:</strong> Some people believe technology has made life easier, while others argue it has made us more dependent. Discuss both views.</p>
+                        <textarea style="min-height: 250px;" placeholder="Write your essay here (200-300 words)..." oninput="updateWordCount(this)"></textarea>
+                        <div class="word-count">Words: <span>0</span>/300</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- READING SECTION -->
+        <div id="reading" class="section">
+            <div class="card">
+                <h3>Reading Section Overview</h3>
+                <p>The Reading section tests comprehension and vocabulary. Time management is crucial!</p>
+            </div>
+
+            <div class="accordion open">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>1. Re-order Paragraphs (2-3 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Arrange sentences in correct order</p>
+                    <div class="tips-box">
+                        <h4>Key Strategies</h4>
+                        <ul>
+                            <li><strong>Find topic sentence:</strong> No pronouns referring back, introduces main idea</li>
+                            <li><strong>Follow pronouns:</strong> "This", "These", "It" refer to something earlier</li>
+                            <li><strong>Linking words:</strong> However, Therefore, Moreover, Furthermore</li>
+                            <li><strong>Articles:</strong> "The" = already mentioned, "A/An" = new concept</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">Practice</h4>
+                    <div class="question">
+                        <p><strong>Arrange in correct order:</strong></p>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">A) However, this convenience comes with environmental costs.</div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">B) Online shopping has revolutionized consumer purchasing.</div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">C) Furthermore, product returns add to the carbon footprint.</div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 10px 0;">D) The increase in delivery vehicles contributes to pollution.</div>
+                        <p><strong>Answer:</strong> <span style="color: #e94560;" onclick="this.textContent='B, A, D, C'">Click to reveal</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>2. Fill in the Blanks (4-5 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Select correct words from dropdown or drag-drop</p>
+                    <div class="tips-box">
+                        <h4>Strategies</h4>
+                        <ul>
+                            <li>Read entire sentence before choosing</li>
+                            <li>Check collocations (words that go together)</li>
+                            <li>Consider grammar: verb forms, prepositions</li>
+                            <li>Use context clues</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">Common Collocations</h4>
+                    <div class="vocab-list">
+                        <div class="vocab-item"><div class="vocab-word">make a decision</div><div class="vocab-meaning">NOT do a decision</div></div>
+                        <div class="vocab-item"><div class="vocab-word">pay attention</div><div class="vocab-meaning">NOT give attention</div></div>
+                        <div class="vocab-item"><div class="vocab-word">conduct research</div><div class="vocab-meaning">NOT make research</div></div>
+                        <div class="vocab-item"><div class="vocab-word">raise awareness</div><div class="vocab-meaning">NOT lift awareness</div></div>
+                        <div class="vocab-item"><div class="vocab-word">reach a conclusion</div><div class="vocab-meaning">NOT arrive conclusion</div></div>
+                        <div class="vocab-item"><div class="vocab-word">take responsibility</div><div class="vocab-meaning">NOT make responsibility</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>3. Multiple Choice (1-2 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Answer questions about a passage</p>
+                    <div class="tips-box">
+                        <h4>Tips</h4>
+                        <ul>
+                            <li>Read question first, then passage</li>
+                            <li>Eliminate obviously wrong answers</li>
+                            <li>For multiple answers: be careful - wrong selections lose points</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">Practice</h4>
+                    <div class="question">
+                        <p class="passage">The Industrial Revolution transformed society from agrarian to industrial. Factories replaced cottage industries, steam power revolutionized production, and urban centers grew rapidly. While bringing economic growth, it also created social challenges including poor working conditions and pollution.</p>
+                        <h4>What was the main impact of the Industrial Revolution?</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectOption(this)" data-correct="false">A) It improved agricultural practices</div>
+                            <div class="option" onclick="selectOption(this)" data-correct="true">B) It transformed society from agricultural to industrial</div>
+                            <div class="option" onclick="selectOption(this)" data-correct="false">C) It only affected Britain</div>
+                            <div class="option" onclick="selectOption(this)" data-correct="false">D) It eliminated all social problems</div>
+                        </div>
+                        <button class="btn btn-primary" onclick="checkMCQ(this)" style="margin-top: 15px;">Check Answer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LISTENING SECTION -->
+        <div id="listening" class="section">
+            <div class="card">
+                <h3>Listening Section Overview</h3>
+                <p>Audio plays ONCE only! Concentration and note-taking are crucial.</p>
+                <div class="tips-box">
+                    <h4>General Tips</h4>
+                    <ul>
+                        <li>Take notes - keywords, not full sentences</li>
+                        <li>Focus on main ideas and supporting points</li>
+                        <li>Listen for signal words: however, therefore, importantly</li>
+                        <li>Practice with British, American, and Australian accents</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion open">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>1. Summarize Spoken Text (1-2 items)</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Listen to lecture, write 50-70 word summary (10 minutes)</p>
+                    <div class="tips-box">
+                        <h4>Note Template</h4>
+                        <ul>
+                            <li>Topic: _______</li>
+                            <li>Point 1: _______</li>
+                            <li>Point 2: _______</li>
+                            <li>Point 3: _______</li>
+                            <li>Conclusion: _______</li>
+                        </ul>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-top: 15px;">
+                        <h4>Writing Template</h4>
+                        <p>"The lecture discusses [TOPIC]. The speaker explains that [POINT 1]. Additionally, [POINT 2] is highlighted. Furthermore, [POINT 3]. In conclusion, [SUMMARY]."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>2. Write from Dictation (3-4 items) - VERY IMPORTANT!</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Task:</strong> Type exactly what you hear</p>
+                    <p style="color: #e94560;"><strong>This task heavily impacts both Listening AND Writing scores!</strong></p>
+                    <div class="tips-box">
+                        <h4>Strategies</h4>
+                        <ul>
+                            <li>Write keywords first, fill gaps after</li>
+                            <li>Focus on articles (a, an, the) and prepositions</li>
+                            <li>Check spelling carefully</li>
+                            <li>Each correct word = 1 point</li>
+                        </ul>
+                    </div>
+                    <h4 style="margin-top: 20px;">Practice (read, hide, then type)</h4>
+                    <div class="question">
+                        <p onclick="this.querySelector('span').style.display='none'; this.querySelector('input').style.display='block'">
+                            <span style="cursor: pointer;">"The assignment must be submitted by the end of the week." (Click to practice)</span>
+                            <input type="text" style="display:none; width:100%; padding:10px; background: rgba(255,255,255,0.1); border: 1px solid #e94560; border-radius: 5px; color: #fff;" placeholder="Type what you remember...">
+                        </p>
+                    </div>
+                    <div class="question">
+                        <p onclick="this.querySelector('span').style.display='none'; this.querySelector('input').style.display='block'">
+                            <span style="cursor: pointer;">"Students should reference their sources in the bibliography." (Click to practice)</span>
+                            <input type="text" style="display:none; width:100%; padding:10px; background: rgba(255,255,255,0.1); border: 1px solid #e94560; border-radius: 5px; color: #fff;" placeholder="Type what you remember...">
+                        </p>
+                    </div>
+                    <div class="question">
+                        <p onclick="this.querySelector('span').style.display='none'; this.querySelector('input').style.display='block'">
+                            <span style="cursor: pointer;">"The library has an extensive collection of academic journals." (Click to practice)</span>
+                            <input type="text" style="display:none; width:100%; padding:10px; background: rgba(255,255,255,0.1); border: 1px solid #e94560; border-radius: 5px; color: #fff;" placeholder="Type what you remember...">
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this.parentElement)">
+                    <h3>3. Other Listening Tasks</h3>
+                    <span>&#9660;</span>
+                </div>
+                <div class="accordion-content">
+                    <div style="display: grid; gap: 15px;">
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                            <h4>Highlight Correct Summary</h4>
+                            <p style="color: #aaa;">Listen and select the best matching summary from options.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                            <h4>Multiple Choice</h4>
+                            <p style="color: #aaa;">Answer questions about what you heard.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                            <h4>Fill in the Blanks</h4>
+                            <p style="color: #aaa;">Type missing words as you listen to transcript.</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                            <h4>Highlight Incorrect Words</h4>
+                            <p style="color: #aaa;">Click words in transcript that differ from audio. Be careful - wrong clicks lose points!</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                            <h4>Select Missing Word</h4>
+                            <p style="color: #aaa;">Choose the word that completes the recording.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOCK EXAMS SECTION -->
+        <div id="mock" class="section">
+            <div class="card">
+                <h3>Mock Exam Center</h3>
+                <p>Practice under timed conditions. The real PTE exam is about 2 hours.</p>
+            </div>
+
+            <div class="timer" id="mockTimer">
+                <span id="timerDisplay">00:00:00</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+                <div class="card" style="text-align: center;">
+                    <h3>Speaking Mini Test</h3>
+                    <p style="color: #aaa;">15 minutes</p>
+                    <button class="btn btn-primary" onclick="startTimer(15)">Start</button>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3>Writing Mini Test</h3>
+                    <p style="color: #aaa;">30 minutes</p>
+                    <button class="btn btn-primary" onclick="startTimer(30)">Start</button>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3>Reading Mini Test</h3>
+                    <p style="color: #aaa;">20 minutes</p>
+                    <button class="btn btn-primary" onclick="startTimer(20)">Start</button>
+                </div>
+                <div class="card" style="text-align: center;">
+                    <h3>Listening Mini Test</h3>
+                    <p style="color: #aaa;">20 minutes</p>
+                    <button class="btn btn-primary" onclick="startTimer(20)">Start</button>
+                </div>
+            </div>
+
+            <div class="card" style="text-align: center; margin-top: 20px;">
+                <h3>Full Mock Test</h3>
+                <p style="color: #aaa;">Complete 2-hour simulation</p>
+                <button class="btn btn-primary" style="font-size: 1.1em; padding: 15px 40px; margin-top: 10px;" onclick="startTimer(120)">Start Full Mock</button>
+                <button class="btn btn-secondary" onclick="stopTimer()">Stop Timer</button>
+            </div>
+        </div>
+
+        <!-- QUIZ SECTION -->
+        <div id="quiz" class="section">
+            <div class="card">
+                <h3>Quick Quizzes</h3>
+                <p>Test your knowledge daily!</p>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+                <button class="btn btn-primary" onclick="showQuizType('vocab')">Vocabulary</button>
+                <button class="btn btn-secondary" onclick="showQuizType('grammar')">Grammar</button>
+                <button class="btn btn-secondary" onclick="showQuizType('collocation')">Collocations</button>
+            </div>
+
+            <!-- Vocabulary Quiz -->
+            <div id="vocab-quiz">
+                <div class="card">
+                    <h3>Vocabulary Quiz</h3>
+                    <div class="question" data-answer="b">
+                        <h4>1. "Ubiquitous" means:</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Rare and unusual</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Present everywhere</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Extremely dangerous</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="c">
+                        <h4>2. Synonym for "meticulous":</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Careless</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Rapid</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Thorough</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="a">
+                        <h4>3. "Pragmatic" means:</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Practical and realistic</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Theoretical</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Emotional</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="d">
+                        <h4>4. "Ephemeral" means:</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Permanent</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Expensive</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Ancient</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="d">Short-lived</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="b">
+                        <h4>5. "Exacerbate" means:</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Improve</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Make worse</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Explain</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="checkQuiz()">Check Answers</button>
+                    <button class="btn btn-secondary" onclick="resetQuiz()">Reset</button>
+                    <div id="quiz-score" class="score-display" style="display: none;">
+                        <h2><span id="correct-count">0</span>/5</h2>
+                        <p>Correct!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grammar Quiz -->
+            <div id="grammar-quiz" style="display: none;">
+                <div class="card">
+                    <h3>Grammar Quiz</h3>
+                    <div class="question" data-answer="b">
+                        <h4>1. Choose correct sentence:</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">The data shows the experiment was successful.</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">The data show the experiment was successful.</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="a">
+                        <h4>2. Correct conditional:</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">If I had known, I would have helped.</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">If I would have known, I would have helped.</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="d">
+                        <h4>3. Correct option:</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">The amount of students has increased.</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="d">The number of students has increased.</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="checkQuiz()">Check Answers</button>
+                    <button class="btn btn-secondary" onclick="resetQuiz()">Reset</button>
+                    <div id="quiz-score2" class="score-display" style="display: none;">
+                        <h2><span id="correct-count2">0</span>/3</h2>
+                        <p>Correct!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collocation Quiz -->
+            <div id="collocation-quiz" style="display: none;">
+                <div class="card">
+                    <h3>Collocations Quiz</h3>
+                    <div class="question" data-answer="a">
+                        <h4>1. _____ a decision</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Make</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Do</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Take</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="c">
+                        <h4>2. _____ research</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Make</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Do</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Conduct</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="b">
+                        <h4>3. _____ attention</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Make</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Pay</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Give</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="d">
+                        <h4>4. _____ a conclusion</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Make</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Come</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="d">Reach</div>
+                        </div>
+                    </div>
+                    <div class="question" data-answer="a">
+                        <h4>5. _____ progress</h4>
+                        <div class="options">
+                            <div class="option" onclick="selectQuizOption(this)" data-value="a">Make</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="b">Do</div>
+                            <div class="option" onclick="selectQuizOption(this)" data-value="c">Have</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="checkQuiz()">Check Answers</button>
+                    <button class="btn btn-secondary" onclick="resetQuiz()">Reset</button>
+                    <div id="quiz-score3" class="score-display" style="display: none;">
+                        <h2><span id="correct-count3">0</span>/5</h2>
+                        <p>Correct!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Accordion
+        function toggleAccordion(el) { el.classList.toggle('open'); }
+
+        // Checklist
+        function toggleCheck(item) {
+            item.classList.toggle('checked');
+            saveProgress();
+        }
+
+        // Word Count
+        function updateWordCount(textarea) {
+            const words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0);
+            textarea.parentElement.querySelector('.word-count span').textContent = words.length;
+        }
+
+        // Show Sample Answer
+        function showAnswer(btn, answer) {
+            let div = btn.nextElementSibling;
+            if (div && div.classList.contains('sample')) {
+                div.remove();
+                btn.textContent = 'Show Sample';
+            } else {
+                div = document.createElement('div');
+                div.className = 'sample';
+                div.style.cssText = 'background: rgba(46,204,113,0.2); padding: 15px; border-radius: 10px; margin-top: 15px;';
+                div.innerHTML = '<strong>Sample:</strong> ' + answer;
+                btn.after(div);
+                btn.textContent = 'Hide Sample';
+            }
+        }
+
+        // MCQ
+        function selectOption(el) {
+            el.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function checkMCQ(btn) {
+            const q = btn.closest('.question');
+            q.querySelectorAll('.option').forEach(o => {
+                o.classList.remove('correct', 'incorrect');
+                if (o.dataset.correct === 'true') o.classList.add('correct');
+                else if (o.classList.contains('selected')) o.classList.add('incorrect');
+            });
+        }
+
+        // Quiz
+        function selectQuizOption(el) {
+            el.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function showQuizType(type) {
+            document.querySelectorAll('[id$="-quiz"]').forEach(q => q.style.display = 'none');
+            document.getElementById(type + '-quiz').style.display = 'block';
+        }
+
+        function checkQuiz() {
+            const container = document.querySelector('.section.active [id$="-quiz"]:not([style*="none"])') || document.getElementById('vocab-quiz');
+            const questions = container.querySelectorAll('.question');
+            let correct = 0;
+            questions.forEach(q => {
+                const answer = q.dataset.answer;
+                const selected = q.querySelector('.option.selected');
+                q.querySelectorAll('.option').forEach(o => {
+                    o.classList.remove('correct', 'incorrect');
+                    if (o.dataset.value === answer) o.classList.add('correct');
+                });
+                if (selected) {
+                    if (selected.dataset.value === answer) correct++;
+                    else selected.classList.add('incorrect');
+                }
+            });
+            const scoreDiv = container.querySelector('[id^="quiz-score"]');
+            if (scoreDiv) {
+                scoreDiv.style.display = 'block';
+                scoreDiv.querySelector('span').textContent = correct;
+            }
+            incrementQuizzes();
+        }
+
+        function resetQuiz() {
+            const container = document.querySelector('.section.active [id$="-quiz"]:not([style*="none"])') || document.getElementById('vocab-quiz');
+            container.querySelectorAll('.option').forEach(o => o.classList.remove('selected', 'correct', 'incorrect'));
+            const scoreDiv = container.querySelector('[id^="quiz-score"]');
+            if (scoreDiv) scoreDiv.style.display = 'none';
+        }
+
+        // Timer
+        let timerInterval = null;
+        let timerSeconds = 0;
+
+        function startTimer(minutes) {
+            timerSeconds = minutes * 60;
+            updateTimer();
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                updateTimer();
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Time is up!');
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            timerSeconds = 0;
+            updateTimer();
+        }
+
+        function updateTimer() {
+            const h = Math.floor(timerSeconds / 3600);
+            const m = Math.floor((timerSeconds % 3600) / 60);
+            const s = timerSeconds % 60;
+            document.getElementById('timerDisplay').textContent =
+                `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        // Read Aloud Practice
+        function startReadAloud(btn) {
+            const passage = btn.previousElementSibling;
+            passage.style.border = '2px solid #e94560';
+            let prep = 40;
+            btn.disabled = true;
+            btn.textContent = `Prepare: ${prep}s`;
+            const prepInt = setInterval(() => {
+                prep--;
+                btn.textContent = `Prepare: ${prep}s`;
+                if (prep <= 0) {
+                    clearInterval(prepInt);
+                    let speak = 40;
+                    btn.textContent = `SPEAK: ${speak}s`;
+                    btn.style.background = '#e74c3c';
+                    const speakInt = setInterval(() => {
+                        speak--;
+                        btn.textContent = `SPEAK: ${speak}s`;
+                        if (speak <= 0) {
+                            clearInterval(speakInt);
+                            btn.textContent = 'Start Practice (40s prep)';
+                            btn.style.background = '';
+                            btn.disabled = false;
+                            passage.style.border = '';
+                        }
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
+        // Progress
+        function saveProgress() {
+            const checked = [];
+            document.querySelectorAll('#dailyChecklist li.checked').forEach((item, i) => checked.push(i));
+            localStorage.setItem('khushi-pte-checklist', JSON.stringify(checked));
+            const today = new Date().toDateString();
+            if (localStorage.getItem('khushi-pte-lastStudy') !== today) {
+                let days = parseInt(localStorage.getItem('khushi-pte-days') || '0') + 1;
+                localStorage.setItem('khushi-pte-days', days);
+                localStorage.setItem('khushi-pte-lastStudy', today);
+                document.getElementById('studyDays').textContent = days;
+            }
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('khushi-pte-checklist');
+            if (saved) {
+                JSON.parse(saved).forEach(i => {
+                    document.querySelectorAll('#dailyChecklist li')[i]?.classList.add('checked');
+                });
+            }
+            document.getElementById('studyDays').textContent = localStorage.getItem('khushi-pte-days') || '0';
+            document.getElementById('quizzesDone').textContent = localStorage.getItem('khushi-pte-quizzes') || '0';
+        }
+
+        function incrementQuizzes() {
+            let q = parseInt(localStorage.getItem('khushi-pte-quizzes') || '0') + 1;
+            localStorage.setItem('khushi-pte-quizzes', q);
+            document.getElementById('quizzesDone').textContent = q;
+        }
+
+        // Reset daily checklist
+        function checkReset() {
+            const today = new Date().toDateString();
+            if (localStorage.getItem('khushi-pte-reset') !== today) {
+                localStorage.setItem('khushi-pte-checklist', '[]');
+                localStorage.setItem('khushi-pte-reset', today);
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProgress();
+            checkReset();
+        });
+    </script>
+</body>
+</html>
