@@ -680,36 +680,74 @@
 
             <div class="timer" id="mockTimer">
                 <span id="timerDisplay">00:00:00</span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-                <div class="card" style="text-align: center;">
-                    <h3>Speaking Mini Test</h3>
-                    <p style="color: #aaa;">15 minutes</p>
-                    <button class="btn btn-primary" onclick="startTimer(15)">Start</button>
-                </div>
-                <div class="card" style="text-align: center;">
-                    <h3>Writing Mini Test</h3>
-                    <p style="color: #aaa;">30 minutes</p>
-                    <button class="btn btn-primary" onclick="startTimer(30)">Start</button>
-                </div>
-                <div class="card" style="text-align: center;">
-                    <h3>Reading Mini Test</h3>
-                    <p style="color: #aaa;">20 minutes</p>
-                    <button class="btn btn-primary" onclick="startTimer(20)">Start</button>
-                </div>
-                <div class="card" style="text-align: center;">
-                    <h3>Listening Mini Test</h3>
-                    <p style="color: #aaa;">20 minutes</p>
-                    <button class="btn btn-primary" onclick="startTimer(20)">Start</button>
+                <div id="mockProgress" style="display: none; margin-top: 10px; font-size: 0.5em;">
+                    Question <span id="currentQ">1</span> of <span id="totalQ">10</span>
                 </div>
             </div>
 
-            <div class="card" style="text-align: center; margin-top: 20px;">
-                <h3>Full Mock Test</h3>
-                <p style="color: #aaa;">Complete 2-hour simulation</p>
-                <button class="btn btn-primary" style="font-size: 1.1em; padding: 15px 40px; margin-top: 10px;" onclick="startTimer(120)">Start Full Mock</button>
-                <button class="btn btn-secondary" onclick="stopTimer()">Stop Timer</button>
+            <!-- Mock Test Selection Menu -->
+            <div id="mockMenu">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+                    <div class="card" style="text-align: center;">
+                        <h3>Speaking Mini Test</h3>
+                        <p style="color: #aaa;">5 questions - 10 minutes</p>
+                        <button class="btn btn-primary" onclick="startMockTest('speaking')">Start Test</button>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h3>Writing Mini Test</h3>
+                        <p style="color: #aaa;">2 tasks - 20 minutes</p>
+                        <button class="btn btn-primary" onclick="startMockTest('writing')">Start Test</button>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h3>Reading Mini Test</h3>
+                        <p style="color: #aaa;">5 questions - 15 minutes</p>
+                        <button class="btn btn-primary" onclick="startMockTest('reading')">Start Test</button>
+                    </div>
+                    <div class="card" style="text-align: center;">
+                        <h3>Listening Mini Test</h3>
+                        <p style="color: #aaa;">5 questions - 10 minutes</p>
+                        <button class="btn btn-primary" onclick="startMockTest('listening')">Start Test</button>
+                    </div>
+                </div>
+
+                <div class="card" style="text-align: center; margin-top: 20px; background: linear-gradient(135deg, rgba(233,69,96,0.2), rgba(243,156,18,0.2));">
+                    <h3>Full Mock Test</h3>
+                    <p style="color: #aaa;">All sections - 45 minutes</p>
+                    <p style="font-size: 0.9em; margin: 10px 0;">Speaking + Writing + Reading + Listening</p>
+                    <button class="btn btn-primary" style="font-size: 1.1em; padding: 15px 40px; margin-top: 10px;" onclick="startMockTest('full')">Start Full Mock</button>
+                </div>
+            </div>
+
+            <!-- Active Mock Test Area -->
+            <div id="mockTestArea" style="display: none;">
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3 id="mockTestTitle">Mock Test</h3>
+                        <button class="btn btn-secondary" onclick="endMockTest()">End Test</button>
+                    </div>
+
+                    <div id="mockQuestionContainer"></div>
+
+                    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                        <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()" style="display: none;">Previous</button>
+                        <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Next</button>
+                        <button class="btn btn-primary" id="submitBtn" onclick="submitMockTest()" style="display: none;">Submit Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mock Test Results -->
+            <div id="mockResults" style="display: none;">
+                <div class="card" style="text-align: center;">
+                    <h3>Test Complete!</h3>
+                    <div class="score-display">
+                        <h2 id="mockFinalScore">0/0</h2>
+                        <p>Your Score</p>
+                    </div>
+                    <div id="mockScoreBreakdown" style="margin: 20px 0;"></div>
+                    <div id="mockAnswerReview" style="text-align: left; margin-top: 20px;"></div>
+                    <button class="btn btn-primary" onclick="restartMock()" style="margin-top: 20px;">Take Another Test</button>
+                </div>
             </div>
         </div>
 
@@ -1069,10 +1107,517 @@
             }
         }
 
+        // ==================== MOCK TEST SYSTEM ====================
+        let currentMockTest = null;
+        let mockQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let mockTestType = '';
+
+        // Question Banks
+        const speakingQuestions = [
+            {
+                type: 'read-aloud',
+                title: 'Read Aloud',
+                instruction: 'Read the following text aloud. You have 40 seconds to prepare and 40 seconds to read.',
+                content: 'The impact of technology on modern education cannot be overstated. Digital tools have transformed how students learn, enabling access to vast resources and interactive content. However, educators must balance screen time with traditional teaching methods to ensure comprehensive skill development.',
+                prepTime: 40,
+                speakTime: 40
+            },
+            {
+                type: 'read-aloud',
+                title: 'Read Aloud',
+                instruction: 'Read the following text aloud. You have 40 seconds to prepare and 40 seconds to read.',
+                content: 'Sustainable development has become a critical focus for governments worldwide. Balancing economic growth with environmental protection requires innovative solutions and international cooperation. The transition to renewable energy sources represents a significant step toward achieving these goals.',
+                prepTime: 40,
+                speakTime: 40
+            },
+            {
+                type: 'short-answer',
+                title: 'Answer Short Question',
+                instruction: 'Answer the following question with one or a few words.',
+                question: 'What do we call a doctor who specializes in treating children?',
+                answer: 'pediatrician'
+            },
+            {
+                type: 'short-answer',
+                title: 'Answer Short Question',
+                instruction: 'Answer the following question with one or a few words.',
+                question: 'What is the capital city of Japan?',
+                answer: 'tokyo'
+            },
+            {
+                type: 'short-answer',
+                title: 'Answer Short Question',
+                instruction: 'Answer the following question with one or a few words.',
+                question: 'What instrument is used to measure atmospheric pressure?',
+                answer: 'barometer'
+            }
+        ];
+
+        const writingQuestions = [
+            {
+                type: 'summarize',
+                title: 'Summarize Written Text',
+                instruction: 'Read the passage and write a ONE sentence summary between 5-75 words.',
+                content: 'Remote work has fundamentally changed the modern workplace. Companies have discovered that employees can be equally productive, if not more so, when working from home. This shift has led to reduced overhead costs, improved work-life balance, and access to a global talent pool. However, challenges remain, including maintaining team cohesion, ensuring effective communication, and addressing feelings of isolation among remote workers. Organizations are now developing hybrid models that combine the benefits of both remote and in-office work.',
+                wordLimit: 75,
+                minWords: 5
+            },
+            {
+                type: 'essay',
+                title: 'Write Essay',
+                instruction: 'Write an essay of 200-300 words on the following topic.',
+                topic: 'Some people believe that social media has improved communication between people, while others think it has made people more isolated. Discuss both views and give your own opinion.',
+                wordLimit: 300,
+                minWords: 200
+            }
+        ];
+
+        const readingQuestions = [
+            {
+                type: 'mcq-single',
+                title: 'Multiple Choice - Single Answer',
+                passage: 'The Great Wall of China, one of the greatest wonders of the world, was built over many centuries. Construction began during the 7th century BC and continued until the 17th century AD. The wall was primarily built to protect Chinese states against nomadic invasions. Contrary to popular belief, the wall is not visible from space with the naked eye. The total length of all sections ever built is approximately 21,196 kilometers.',
+                question: 'What was the primary purpose of building the Great Wall of China?',
+                options: ['To serve as a trade route', 'To protect against invasions', 'To demonstrate wealth', 'To create employment'],
+                answer: 1
+            },
+            {
+                type: 'mcq-single',
+                title: 'Multiple Choice - Single Answer',
+                passage: 'Photosynthesis is the process by which plants convert sunlight into energy. During this process, plants absorb carbon dioxide from the air and water from the soil. Using the energy from sunlight, they convert these raw materials into glucose and oxygen. The glucose provides energy for the plant growth, while oxygen is released into the atmosphere as a byproduct.',
+                question: 'What are the byproducts of photosynthesis?',
+                options: ['Carbon dioxide and water', 'Glucose and oxygen', 'Sunlight and minerals', 'Nitrogen and hydrogen'],
+                answer: 1
+            },
+            {
+                type: 'reorder',
+                title: 'Re-order Paragraphs',
+                instruction: 'Arrange the sentences in the correct order to form a coherent paragraph.',
+                sentences: [
+                    'A) Furthermore, regular physical activity has been shown to improve cognitive function.',
+                    'B) Exercise plays a vital role in maintaining both physical and mental health.',
+                    'C) These benefits make exercise an essential component of a healthy lifestyle.',
+                    'D) It helps reduce stress, anxiety, and symptoms of depression.'
+                ],
+                correctOrder: [1, 3, 0, 2] // B, D, A, C
+            },
+            {
+                type: 'fill-blank',
+                title: 'Fill in the Blanks',
+                instruction: 'Choose the correct word for each blank.',
+                text: 'Climate change poses a significant [BLANK1] to global ecosystems. Scientists have observed rising temperatures, melting ice caps, and more [BLANK2] weather events. To address this crisis, nations must [BLANK3] together to reduce carbon emissions.',
+                blanks: {
+                    BLANK1: { options: ['threat', 'benefit', 'solution', 'mystery'], answer: 0 },
+                    BLANK2: { options: ['mild', 'extreme', 'pleasant', 'rare'], answer: 1 },
+                    BLANK3: { options: ['compete', 'argue', 'work', 'disagree'], answer: 2 }
+                }
+            },
+            {
+                type: 'mcq-single',
+                title: 'Multiple Choice - Single Answer',
+                passage: 'The invention of the printing press by Johannes Gutenberg around 1440 revolutionized the spread of information. Before this invention, books were copied by hand, making them expensive and rare. The printing press made it possible to produce books quickly and cheaply, leading to increased literacy rates and the rapid spread of new ideas during the Renaissance and Reformation periods.',
+                question: 'What was a major consequence of the printing press invention?',
+                options: ['Books became more expensive', 'Literacy rates increased', 'Information spread more slowly', 'Handwritten books became more popular'],
+                answer: 1
+            }
+        ];
+
+        const listeningQuestions = [
+            {
+                type: 'dictation',
+                title: 'Write from Dictation',
+                instruction: 'You will see a sentence. Memorize it, then click "Hide & Type" to write it from memory.',
+                sentence: 'The university library will be closed for renovations next month.',
+                answer: 'The university library will be closed for renovations next month.'
+            },
+            {
+                type: 'dictation',
+                title: 'Write from Dictation',
+                instruction: 'You will see a sentence. Memorize it, then click "Hide & Type" to write it from memory.',
+                sentence: 'Students must submit their assignments before the deadline.',
+                answer: 'Students must submit their assignments before the deadline.'
+            },
+            {
+                type: 'dictation',
+                title: 'Write from Dictation',
+                instruction: 'You will see a sentence. Memorize it, then click "Hide & Type" to write it from memory.',
+                sentence: 'The research findings have important implications for public policy.',
+                answer: 'The research findings have important implications for public policy.'
+            },
+            {
+                type: 'highlight-summary',
+                title: 'Select the Best Summary',
+                instruction: 'Read the lecture summary options and select the one that best captures the main points.',
+                lectureAbout: 'A lecture about the benefits of meditation for stress reduction',
+                options: [
+                    'Meditation is a religious practice that originated in ancient India and has no scientific basis.',
+                    'Research shows meditation can reduce stress by lowering cortisol levels, improving focus, and promoting emotional well-being.',
+                    'Meditation is only effective when practiced for several hours each day.',
+                    'Stress cannot be managed through any mental techniques or practices.'
+                ],
+                answer: 1
+            },
+            {
+                type: 'highlight-summary',
+                title: 'Select the Best Summary',
+                instruction: 'Read the lecture summary options and select the one that best captures the main points.',
+                lectureAbout: 'A lecture about the importance of biodiversity',
+                options: [
+                    'Biodiversity only refers to the number of animal species in a region.',
+                    'Biodiversity is important because it supports ecosystem services, provides food security, and offers potential medical discoveries.',
+                    'Human activities have no impact on biodiversity levels.',
+                    'Protecting biodiversity is too expensive to be worthwhile.'
+                ],
+                answer: 1
+            }
+        ];
+
+        function startMockTest(type) {
+            mockTestType = type;
+            currentQuestionIndex = 0;
+            userAnswers = {};
+
+            // Set questions based on test type
+            if (type === 'speaking') {
+                mockQuestions = [...speakingQuestions];
+                startTimer(10);
+            } else if (type === 'writing') {
+                mockQuestions = [...writingQuestions];
+                startTimer(20);
+            } else if (type === 'reading') {
+                mockQuestions = [...readingQuestions];
+                startTimer(15);
+            } else if (type === 'listening') {
+                mockQuestions = [...listeningQuestions];
+                startTimer(10);
+            } else if (type === 'full') {
+                mockQuestions = [
+                    ...speakingQuestions.slice(0, 3),
+                    ...writingQuestions.slice(0, 1),
+                    ...readingQuestions.slice(0, 3),
+                    ...listeningQuestions.slice(0, 3)
+                ];
+                startTimer(45);
+            }
+
+            document.getElementById('mockMenu').style.display = 'none';
+            document.getElementById('mockTestArea').style.display = 'block';
+            document.getElementById('mockResults').style.display = 'none';
+            document.getElementById('mockProgress').style.display = 'block';
+            document.getElementById('totalQ').textContent = mockQuestions.length;
+            document.getElementById('mockTestTitle').textContent = type.charAt(0).toUpperCase() + type.slice(1) + ' Mock Test';
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const q = mockQuestions[currentQuestionIndex];
+            const container = document.getElementById('mockQuestionContainer');
+            document.getElementById('currentQ').textContent = currentQuestionIndex + 1;
+
+            let html = `<div class="question" style="margin-bottom: 0;">
+                <h4 style="color: #f39c12; margin-bottom: 10px;">${q.title}</h4>
+                <p style="color: #aaa; margin-bottom: 15px;">${q.instruction}</p>`;
+
+            if (q.type === 'read-aloud') {
+                html += `<div class="passage">${q.content}</div>
+                    <div id="speakingTimer" style="text-align: center; margin-top: 15px;">
+                        <button class="btn btn-primary" onclick="startSpeakingTimer(${q.prepTime}, ${q.speakTime})">Start (${q.prepTime}s prep + ${q.speakTime}s speak)</button>
+                        <div id="speakingStatus" style="margin-top: 10px; font-size: 1.2em;"></div>
+                    </div>`;
+            } else if (q.type === 'short-answer') {
+                html += `<p style="font-size: 1.2em; margin-bottom: 15px;"><strong>Q: ${q.question}</strong></p>
+                    <input type="text" id="shortAnswer" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.1); border: 2px solid #e94560; border-radius: 8px; color: #fff; font-size: 1em;"
+                    placeholder="Type your answer..." value="${userAnswers[currentQuestionIndex] || ''}"
+                    onchange="userAnswers[${currentQuestionIndex}] = this.value">`;
+            } else if (q.type === 'summarize') {
+                html += `<div class="passage">${q.content}</div>
+                    <textarea id="summaryAnswer" placeholder="Write your one-sentence summary here..."
+                    style="margin-top: 15px;" oninput="updateMockWordCount(this, ${q.wordLimit}); userAnswers[${currentQuestionIndex}] = this.value">${userAnswers[currentQuestionIndex] || ''}</textarea>
+                    <div class="word-count">Words: <span id="mockWC">0</span>/${q.wordLimit}</div>`;
+            } else if (q.type === 'essay') {
+                html += `<p style="font-size: 1.1em; margin-bottom: 15px;"><strong>${q.topic}</strong></p>
+                    <textarea id="essayAnswer" placeholder="Write your essay here (${q.minWords}-${q.wordLimit} words)..."
+                    style="min-height: 250px;" oninput="updateMockWordCount(this, ${q.wordLimit}); userAnswers[${currentQuestionIndex}] = this.value">${userAnswers[currentQuestionIndex] || ''}</textarea>
+                    <div class="word-count">Words: <span id="mockWC">0</span>/${q.wordLimit} (min: ${q.minWords})</div>`;
+            } else if (q.type === 'mcq-single') {
+                html += `<div class="passage">${q.passage}</div>
+                    <p style="margin: 15px 0;"><strong>${q.question}</strong></p>
+                    <div class="options">`;
+                q.options.forEach((opt, i) => {
+                    const selected = userAnswers[currentQuestionIndex] === i ? 'selected' : '';
+                    html += `<div class="option ${selected}" onclick="selectMockOption(this, ${i})">${opt}</div>`;
+                });
+                html += `</div>`;
+            } else if (q.type === 'reorder') {
+                html += `<p style="margin-bottom: 15px;">Drag to reorder or type the correct sequence (e.g., B,D,A,C):</p>
+                    <div style="margin-bottom: 15px;">`;
+                q.sentences.forEach(s => {
+                    html += `<div style="background: rgba(255,255,255,0.08); padding: 12px; border-radius: 8px; margin-bottom: 8px;">${s}</div>`;
+                });
+                html += `</div>
+                    <input type="text" id="reorderAnswer" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.1); border: 2px solid #e94560; border-radius: 8px; color: #fff;"
+                    placeholder="Enter order (e.g., B,D,A,C)" value="${userAnswers[currentQuestionIndex] || ''}"
+                    onchange="userAnswers[${currentQuestionIndex}] = this.value.toUpperCase()">`;
+            } else if (q.type === 'fill-blank') {
+                let textWithBlanks = q.text;
+                Object.keys(q.blanks).forEach((blankId, idx) => {
+                    const blank = q.blanks[blankId];
+                    const savedAnswer = userAnswers[currentQuestionIndex] ? userAnswers[currentQuestionIndex][blankId] : '';
+                    let selectHtml = `<select id="${blankId}" style="padding: 5px 10px; background: rgba(255,255,255,0.1); border: 1px solid #e94560; border-radius: 5px; color: #fff;" onchange="saveFillBlankAnswer(${currentQuestionIndex}, '${blankId}', this.value)">
+                        <option value="">Select...</option>`;
+                    blank.options.forEach((opt, i) => {
+                        const selected = savedAnswer === String(i) ? 'selected' : '';
+                        selectHtml += `<option value="${i}" ${selected}>${opt}</option>`;
+                    });
+                    selectHtml += `</select>`;
+                    textWithBlanks = textWithBlanks.replace(`[${blankId}]`, selectHtml);
+                });
+                html += `<div style="line-height: 2.5; font-size: 1.1em;">${textWithBlanks}</div>`;
+            } else if (q.type === 'dictation') {
+                html += `<div id="dictationSentence" class="passage" style="font-size: 1.2em;">${q.sentence}</div>
+                    <button class="btn btn-primary" id="hideBtn" onclick="hideDictation()" style="margin: 15px 0;">Hide & Type</button>
+                    <div id="dictationInput" style="display: none;">
+                        <textarea id="dictationAnswer" placeholder="Type the sentence from memory..."
+                        oninput="userAnswers[${currentQuestionIndex}] = this.value">${userAnswers[currentQuestionIndex] || ''}</textarea>
+                    </div>`;
+            } else if (q.type === 'highlight-summary') {
+                html += `<p style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px;"><em>Topic: ${q.lectureAbout}</em></p>
+                    <p style="margin-bottom: 15px;"><strong>Select the best summary:</strong></p>
+                    <div class="options">`;
+                q.options.forEach((opt, i) => {
+                    const selected = userAnswers[currentQuestionIndex] === i ? 'selected' : '';
+                    html += `<div class="option ${selected}" onclick="selectMockOption(this, ${i})">${opt}</div>`;
+                });
+                html += `</div>`;
+            }
+
+            html += `</div>`;
+            container.innerHTML = html;
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+            document.getElementById('nextBtn').style.display = currentQuestionIndex < mockQuestions.length - 1 ? 'inline-block' : 'none';
+            document.getElementById('submitBtn').style.display = currentQuestionIndex === mockQuestions.length - 1 ? 'inline-block' : 'none';
+
+            // Update word count if applicable
+            const textarea = container.querySelector('textarea');
+            if (textarea && textarea.value) {
+                updateMockWordCount(textarea, mockQuestions[currentQuestionIndex].wordLimit || 300);
+            }
+        }
+
+        function selectMockOption(el, value) {
+            el.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            userAnswers[currentQuestionIndex] = value;
+        }
+
+        function saveFillBlankAnswer(qIndex, blankId, value) {
+            if (!userAnswers[qIndex]) userAnswers[qIndex] = {};
+            userAnswers[qIndex][blankId] = value;
+        }
+
+        function hideDictation() {
+            document.getElementById('dictationSentence').style.display = 'none';
+            document.getElementById('hideBtn').style.display = 'none';
+            document.getElementById('dictationInput').style.display = 'block';
+        }
+
+        function updateMockWordCount(textarea, limit) {
+            const words = textarea.value.trim().split(/\s+/).filter(w => w.length > 0);
+            const wcSpan = document.getElementById('mockWC');
+            if (wcSpan) wcSpan.textContent = words.length;
+        }
+
+        function startSpeakingTimer(prepTime, speakTime) {
+            const statusEl = document.getElementById('speakingStatus');
+            const btn = event.target;
+            btn.disabled = true;
+
+            let prep = prepTime;
+            statusEl.innerHTML = `<span style="color: #f39c12;">Prepare: ${prep}s</span>`;
+
+            const prepInt = setInterval(() => {
+                prep--;
+                statusEl.innerHTML = `<span style="color: #f39c12;">Prepare: ${prep}s</span>`;
+                if (prep <= 0) {
+                    clearInterval(prepInt);
+                    let speak = speakTime;
+                    statusEl.innerHTML = `<span style="color: #e94560; font-weight: bold;">SPEAK NOW: ${speak}s</span>`;
+                    const speakInt = setInterval(() => {
+                        speak--;
+                        statusEl.innerHTML = `<span style="color: #e94560; font-weight: bold;">SPEAK NOW: ${speak}s</span>`;
+                        if (speak <= 0) {
+                            clearInterval(speakInt);
+                            statusEl.innerHTML = `<span style="color: #2ecc71;">Complete! Click Next to continue.</span>`;
+                            userAnswers[currentQuestionIndex] = 'completed';
+                            btn.disabled = false;
+                            btn.textContent = 'Restart';
+                        }
+                    }, 1000);
+                }
+            }, 1000);
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < mockQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function endMockTest() {
+            if (confirm('Are you sure you want to end the test? Your progress will be lost.')) {
+                stopTimer();
+                restartMock();
+            }
+        }
+
+        function submitMockTest() {
+            stopTimer();
+            calculateMockScore();
+        }
+
+        function calculateMockScore() {
+            let totalPoints = 0;
+            let earnedPoints = 0;
+            let reviewHtml = '<h4 style="margin-bottom: 15px;">Answer Review:</h4>';
+
+            mockQuestions.forEach((q, idx) => {
+                let correct = false;
+                let userAns = userAnswers[idx];
+                let correctAns = '';
+
+                if (q.type === 'read-aloud') {
+                    totalPoints += 1;
+                    if (userAns === 'completed') {
+                        earnedPoints += 1;
+                        correct = true;
+                    }
+                    correctAns = 'Completed speaking task';
+                } else if (q.type === 'short-answer') {
+                    totalPoints += 1;
+                    correctAns = q.answer;
+                    if (userAns && userAns.toLowerCase().includes(q.answer.toLowerCase())) {
+                        earnedPoints += 1;
+                        correct = true;
+                    }
+                } else if (q.type === 'mcq-single' || q.type === 'highlight-summary') {
+                    totalPoints += 1;
+                    correctAns = q.options[q.answer];
+                    if (userAns === q.answer) {
+                        earnedPoints += 1;
+                        correct = true;
+                    }
+                } else if (q.type === 'reorder') {
+                    totalPoints += 1;
+                    const correctOrderLetters = q.correctOrder.map(i => String.fromCharCode(65 + i)).join(',');
+                    correctAns = correctOrderLetters;
+                    if (userAns && userAns.replace(/\s/g, '').toUpperCase() === correctOrderLetters) {
+                        earnedPoints += 1;
+                        correct = true;
+                    }
+                } else if (q.type === 'fill-blank') {
+                    const blankKeys = Object.keys(q.blanks);
+                    totalPoints += blankKeys.length;
+                    correctAns = blankKeys.map(k => q.blanks[k].options[q.blanks[k].answer]).join(', ');
+                    blankKeys.forEach(k => {
+                        if (userAns && userAns[k] === String(q.blanks[k].answer)) {
+                            earnedPoints += 1;
+                        }
+                    });
+                    correct = blankKeys.every(k => userAns && userAns[k] === String(q.blanks[k].answer));
+                } else if (q.type === 'dictation') {
+                    totalPoints += 1;
+                    correctAns = q.answer;
+                    if (userAns) {
+                        const similarity = calculateSimilarity(userAns.toLowerCase(), q.answer.toLowerCase());
+                        if (similarity > 0.8) {
+                            earnedPoints += 1;
+                            correct = true;
+                        } else if (similarity > 0.5) {
+                            earnedPoints += 0.5;
+                        }
+                    }
+                } else if (q.type === 'summarize' || q.type === 'essay') {
+                    totalPoints += 1;
+                    if (userAns && userAns.trim().split(/\s+/).length >= (q.minWords || 5)) {
+                        earnedPoints += 1;
+                        correct = true;
+                    }
+                    correctAns = 'Evaluated based on word count and completion';
+                }
+
+                const statusColor = correct ? '#2ecc71' : '#e74c3c';
+                const statusText = correct ? 'Correct' : 'Incorrect';
+                reviewHtml += `<div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 3px solid ${statusColor};">
+                    <strong>Q${idx + 1}: ${q.title}</strong> - <span style="color: ${statusColor};">${statusText}</span>
+                    <div style="color: #aaa; font-size: 0.9em; margin-top: 5px;">Correct answer: ${correctAns}</div>
+                </div>`;
+            });
+
+            const percentage = Math.round((earnedPoints / totalPoints) * 100);
+            const pteScore = Math.round(10 + (percentage * 0.8)); // Rough PTE score estimation
+
+            document.getElementById('mockFinalScore').textContent = `${Math.round(earnedPoints)}/${totalPoints}`;
+            document.getElementById('mockScoreBreakdown').innerHTML = `
+                <p style="font-size: 1.2em;">Estimated PTE Score: <strong style="color: #f39c12;">${pteScore}</strong>/90</p>
+                <p style="color: #aaa;">Accuracy: ${percentage}%</p>
+            `;
+            document.getElementById('mockAnswerReview').innerHTML = reviewHtml;
+
+            // Save best score
+            const savedScore = parseInt(localStorage.getItem('khushi-pte-mockScore') || '0');
+            if (pteScore > savedScore) {
+                localStorage.setItem('khushi-pte-mockScore', pteScore);
+                document.getElementById('mockScore').textContent = pteScore;
+            }
+
+            document.getElementById('mockTestArea').style.display = 'none';
+            document.getElementById('mockResults').style.display = 'block';
+            document.getElementById('mockProgress').style.display = 'none';
+        }
+
+        function calculateSimilarity(str1, str2) {
+            const words1 = str1.split(/\s+/);
+            const words2 = str2.split(/\s+/);
+            let matches = 0;
+            words1.forEach(w => {
+                if (words2.includes(w)) matches++;
+            });
+            return matches / Math.max(words1.length, words2.length);
+        }
+
+        function restartMock() {
+            document.getElementById('mockMenu').style.display = 'block';
+            document.getElementById('mockTestArea').style.display = 'none';
+            document.getElementById('mockResults').style.display = 'none';
+            document.getElementById('mockProgress').style.display = 'none';
+            mockQuestions = [];
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            stopTimer();
+        }
+
         // Init
         document.addEventListener('DOMContentLoaded', () => {
             loadProgress();
             checkReset();
+            // Load mock score
+            const savedMockScore = localStorage.getItem('khushi-pte-mockScore');
+            if (savedMockScore) {
+                document.getElementById('mockScore').textContent = savedMockScore;
+            }
         });
     </script>
 </body>
