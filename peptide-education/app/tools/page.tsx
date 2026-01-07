@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import {
   FlaskConical,
@@ -10,6 +12,7 @@ import {
   Sparkles,
   Shield
 } from 'lucide-react'
+import { CheckoutButton } from '@/components/CheckoutButton'
 
 const toolkitFeatures = [
   {
@@ -138,12 +141,16 @@ export default function ToolsPage() {
               </div>
 
               <div className="mt-8">
-                <button className="btn-primary w-full py-3 text-lg">
-                  Get Toolkit — ₹999
-                </button>
-                <p className="mt-3 text-xs text-center text-gray-500">
-                  Secure payment via Razorpay. Instant access after purchase.
-                </p>
+                <CheckoutButton
+                  amount={999}
+                  productName="Peptide Clarity Toolkit"
+                  onSuccess={(access) => {
+                    console.log('Purchase successful:', access)
+                  }}
+                  onError={(error) => {
+                    console.error('Purchase failed:', error)
+                  }}
+                />
               </div>
             </div>
           </div>
