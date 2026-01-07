@@ -42,6 +42,30 @@ const articles = [
     readTime: '8 min',
     featured: true,
   },
+  {
+    slug: 'tb500-vs-bpc157-india',
+    title: 'TB-500 vs BPC-157: A Detailed Comparison',
+    description: 'Compare mechanisms, evidence quality, and regulatory status of two popular healing peptides in the Indian context.',
+    category: 'Comparison',
+    readTime: '10 min',
+    featured: true,
+  },
+  {
+    slug: 'peptide-quality-testing-india',
+    title: 'Peptide Quality Testing in India: What You Need to Know',
+    description: 'Understand peptide purity testing options in India, how to interpret test results, and red flags to watch for.',
+    category: 'Quality',
+    readTime: '9 min',
+    featured: false,
+  },
+  {
+    slug: 'ghk-cu-copper-peptide-evidence',
+    title: 'GHK-Cu (Copper Peptide): An Evidence Review',
+    description: 'Evaluating the scientific evidence behind GHK-Cu claims for skin, hair, and healing — with India-specific context.',
+    category: 'Evidence',
+    readTime: '11 min',
+    featured: true,
+  },
 ]
 
 export default function LearnPage() {

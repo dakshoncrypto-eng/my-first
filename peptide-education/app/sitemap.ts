@@ -21,6 +21,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/learn/bpc-157-human-vs-animal-studies',
     '/learn/research-use-only-meaning',
     '/learn/how-to-evaluate-peptide-claims',
+    '/learn/tb500-vs-bpc157-india',
+    '/learn/peptide-quality-testing-india',
+    '/learn/ghk-cu-copper-peptide-evidence',
   ]
 
   const staticEntries = staticPages.map((path) => ({
