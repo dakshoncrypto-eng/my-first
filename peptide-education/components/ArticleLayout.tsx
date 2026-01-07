@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { AlertTriangle, Clock, ArrowLeft, ArrowRight, BookOpen } from 'lucide-react'
+import { EmailCapture } from './EmailCapture'
 
 interface ArticleLayoutProps {
   title: string
@@ -87,6 +88,11 @@ export function ArticleLayout({
             Explore Toolkit
             <ArrowRight className="h-4 w-4 ml-2" />
           </Link>
+        </div>
+
+        {/* Email Capture */}
+        <div className="mt-8">
+          <EmailCapture variant="inline" source="article" />
         </div>
       </article>
     </div>

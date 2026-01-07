@@ -11,6 +11,7 @@ import {
   Microscope,
   Brain
 } from 'lucide-react'
+import { EmailCapture } from '@/components/EmailCapture'
 
 const features = [
   {
@@ -180,6 +181,13 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Email Capture Section */}
+      <section className="py-16 bg-white border-t border-gray-200">
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+          <EmailCapture source="homepage" />
         </div>
       </section>
 
