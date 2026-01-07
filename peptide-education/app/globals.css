@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+}
+
+@layer components {
+  .disclaimer-banner {
+    @apply bg-amber-50 border-l-4 border-amber-400 p-4 text-sm text-amber-800;
+  }
+
+  .evidence-tier {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .evidence-tier-1 {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .evidence-tier-2 {
+    @apply bg-lime-100 text-lime-800;
+  }
+
+  .evidence-tier-3 {
+    @apply bg-orange-100 text-orange-800;
+  }
+
+  .evidence-tier-4 {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .evidence-tier-5 {
+    @apply bg-gray-100 text-gray-800;
+  }
+
+  .status-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .status-approved {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .status-gray {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  .status-prohibited {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6;
+  }
+
+  .card-hover {
+    @apply card transition-shadow hover:shadow-md;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
