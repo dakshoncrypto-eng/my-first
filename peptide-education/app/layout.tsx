@@ -1,12 +1,9 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { DisclaimerBanner } from '@/components/DisclaimerBanner'
-
-const inter = Inter({ subsets: ['latin'] })
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://peptideclarity.com'
 
@@ -78,7 +75,7 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className={inter.className}>
+      <body className="font-sans">
         <DisclaimerBanner />
         <Header />
         <main className="min-h-screen">

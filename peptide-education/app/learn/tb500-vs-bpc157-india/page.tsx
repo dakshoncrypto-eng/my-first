@@ -128,8 +128,8 @@ export default function TB500vsBPC157Page() {
             </tr>
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">Evidence Tier</td>
-              <td className="px-4 py-3"><EvidenceTier tier={4} showLabel /></td>
-              <td className="px-4 py-3"><EvidenceTier tier={4} showLabel /></td>
+              <td className="px-4 py-3"><EvidenceTier tier={4} /></td>
+              <td className="px-4 py-3"><EvidenceTier tier={4} /></td>
             </tr>
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">Primary Research Focus</td>
@@ -189,8 +189,8 @@ export default function TB500vsBPC157Page() {
           <tbody className="bg-white divide-y divide-gray-200">
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">CDSCO Approval</td>
-              <td className="px-4 py-3"><RegulatoryStatus status="gray" label="Not Approved" /></td>
-              <td className="px-4 py-3"><RegulatoryStatus status="gray" label="Not Approved" /></td>
+              <td className="px-4 py-3"><RegulatoryStatus status="gray" /></td>
+              <td className="px-4 py-3"><RegulatoryStatus status="gray" /></td>
             </tr>
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">NDPS Status</td>
@@ -199,8 +199,8 @@ export default function TB500vsBPC157Page() {
             </tr>
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">WADA Status</td>
-              <td className="px-4 py-3"><RegulatoryStatus status="prohibited" label="Prohibited (S0)" /></td>
-              <td className="px-4 py-3"><RegulatoryStatus status="prohibited" label="Prohibited (S0)" /></td>
+              <td className="px-4 py-3"><RegulatoryStatus status="prohibited" /></td>
+              <td className="px-4 py-3"><RegulatoryStatus status="prohibited" /></td>
             </tr>
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">Import Risk</td>

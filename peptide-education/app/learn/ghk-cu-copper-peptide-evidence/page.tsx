@@ -77,7 +77,7 @@ export default function GHKCuEvidencePage() {
 
       <div className="border-l-4 border-green-400 pl-4 my-4">
         <div className="flex items-center mb-2">
-          <EvidenceTier tier={3} showLabel />
+          <EvidenceTier tier={3} />
           <span className="ml-2 text-sm text-gray-600">(Human observational + small trials)</span>
         </div>
       </div>
@@ -123,7 +123,7 @@ export default function GHKCuEvidencePage() {
 
       <div className="border-l-4 border-yellow-400 pl-4 my-4">
         <div className="flex items-center mb-2">
-          <EvidenceTier tier={3} showLabel />
+          <EvidenceTier tier={3} />
           <span className="ml-2 text-sm text-gray-600">(Human trials, mostly topical)</span>
         </div>
       </div>
@@ -167,7 +167,7 @@ export default function GHKCuEvidencePage() {
 
       <div className="border-l-4 border-orange-400 pl-4 my-4">
         <div className="flex items-center mb-2">
-          <EvidenceTier tier={4} showLabel />
+          <EvidenceTier tier={4} />
           <span className="ml-2 text-sm text-gray-600">(Primarily in vitro + animal)</span>
         </div>
       </div>
@@ -212,7 +212,7 @@ export default function GHKCuEvidencePage() {
 
       <div className="border-l-4 border-red-400 pl-4 my-4">
         <div className="flex items-center mb-2">
-          <EvidenceTier tier={4} showLabel />
+          <EvidenceTier tier={4} />
           <span className="ml-2 text-sm text-gray-600">(Limited human data)</span>
         </div>
       </div>
@@ -243,17 +243,17 @@ export default function GHKCuEvidencePage() {
           <tbody className="bg-white divide-y divide-gray-200">
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">Cosmetic (topical)</td>
-              <td className="px-4 py-3"><RegulatoryStatus status="approved" label="Legal" /></td>
+              <td className="px-4 py-3"><RegulatoryStatus status="approved" /></td>
               <td className="px-4 py-3 text-sm text-gray-600">Available in skincare products; regulated as cosmetic</td>
             </tr>
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">Injectable</td>
-              <td className="px-4 py-3"><RegulatoryStatus status="gray" label="Gray Zone" /></td>
+              <td className="px-4 py-3"><RegulatoryStatus status="gray" /></td>
               <td className="px-4 py-3 text-sm text-gray-600">Not approved for human injection; research chemical status</td>
             </tr>
             <tr>
               <td className="px-4 py-3 text-sm font-medium text-gray-900">WADA</td>
-              <td className="px-4 py-3"><RegulatoryStatus status="gray" label="Not Listed" /></td>
+              <td className="px-4 py-3"><RegulatoryStatus status="gray" /></td>
               <td className="px-4 py-3 text-sm text-gray-600">Not on prohibited list (as of 2024)</td>
             </tr>
           </tbody>
