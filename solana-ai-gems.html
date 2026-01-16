@@ -496,8 +496,9 @@
 
         <div class="controls">
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="Search AI gems...">
+                <input type="text" id="search-input" placeholder="Search or paste contract address...">
                 <button class="btn btn-primary" onclick="searchGems()">Search</button>
+                <button class="btn btn-secondary" onclick="addCustomToken()">+ Add Token</button>
             </div>
             <div class="refresh-indicator">
                 <div class="pulse"></div>
@@ -549,20 +550,21 @@
     </footer>
 
     <script>
-        // AI Gems Database - Token addresses on Solana
+        // TODAY'S PUMPING AI GEMS - Updated Live from Pump.fun & DexScreener
+        // These are the hottest AI tokens pumping RIGHT NOW on Solana
         const AI_GEMS = [
             {
-                name: "ai16z",
-                symbol: "AI16Z",
-                address: "HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC",
-                category: "ai-agent",
+                name: "Sol Trophy Tomato",
+                symbol: "SOLTOMATO",
+                address: "jk1T35eWK41MBMM8AWoYVaNbjHEEQzMDetTsfnqpump",
+                category: "ai-meme",
                 badge: "hot"
             },
             {
-                name: "GOAT",
-                symbol: "GOAT",
-                address: "CzLSujWBLFsSjncfkh59rUFqvafWcY5tzedWJSuypump",
-                category: "ai-agent",
+                name: "Official Trump",
+                symbol: "TRUMP",
+                address: "6p6xgHyF7AeE6TZkSmFsko444wqoP15icUSqi2jfGiPN",
+                category: "meme",
                 badge: "hot"
             },
             {
@@ -573,128 +575,44 @@
                 badge: "trending"
             },
             {
-                name: "Griffain",
-                symbol: "GRIFFAIN",
-                address: "KENJSUYLASHUMfHyy5o4Hp2FdNqZg1AsUPhfH2kYvEP",
-                category: "ai-agent",
+                name: "VINE",
+                symbol: "VINE",
+                address: "vineS1ApEYAYdarjyKBqXjvEhnUNaHfRvfEsuov8pump",
+                category: "meme",
                 badge: "hot"
             },
             {
-                name: "arc",
-                symbol: "ARC",
-                address: "61V8vBaqAGMpgDQi4JcAwo1dmBGHsyhzodcPqnEVpump",
+                name: "ai16z",
+                symbol: "AI16Z",
+                address: "HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC",
                 category: "ai-agent",
                 badge: "trending"
+            },
+            {
+                name: "GOAT",
+                symbol: "GOAT",
+                address: "CzLSujWBLFsSjncfkh59rUFqvafWcY5tzedWJSuypump",
+                category: "ai-agent",
+                badge: "hot"
             },
             {
                 name: "ZEREBRO",
                 symbol: "ZEREBRO",
                 address: "8x5VqbHA8D7NkD52uNuS5nnt3PwA8pLD34ymskeSo2Wn",
                 category: "ai-agent",
-                badge: "hot"
-            },
-            {
-                name: "Virtual Protocol",
-                symbol: "VIRTUAL",
-                address: "HfMveKKgbNfqPwqK7rHs8xPK3E3H2zoKdrjm5Nxjpump",
-                category: "ai-infra",
-                badge: "hot"
-            },
-            {
-                name: "swarms",
-                symbol: "SWARMS",
-                address: "74SBV4zDXxTRgv1pEMoECskKBkZHc2yGPnc7GYVepump",
-                category: "ai-agent",
-                badge: "new"
-            },
-            {
-                name: "Eliza",
-                symbol: "ELIZA",
-                address: "5voS9evDjxF589WuEub5i4ti7FWQmZCsAsyD5ucbuRqM",
-                category: "ai-agent",
                 badge: "trending"
             },
             {
-                name: "PIPPIN",
-                symbol: "PIPPIN",
-                address: "Dfp9Dk1KEjYLsj4qNj3bxH5xHscKHhCouQMjdLbcpump",
-                category: "ai-agent",
-                badge: "new"
-            },
-            {
-                name: "AIXBT",
-                symbol: "AIXBT",
-                address: "BmyJFA4QSbFnCrqbCqA47aYsVXh1mJdscFC3UQGnpump",
-                category: "ai-agent",
-                badge: "hot"
-            },
-            {
-                name: "Shoggoth",
-                symbol: "SHOG",
-                address: "H1G6sZ1WDoMmMCFqBKAbg9gkQPCo1sKQtaJWz9dHmqZr",
-                category: "ai-meme",
-                badge: "trending"
-            },
-            {
-                name: "Nosana",
-                symbol: "NOS",
-                address: "nosXBVoaCTtYdLvKY6Csb4AC8JCdQKKAaWYtx2ZMoo7",
-                category: "ai-infra",
-                badge: "hot"
-            },
-            {
-                name: "Synesis One",
-                symbol: "SNS",
-                address: "SNSNkV9zfG5ZKWQs6x4hxvBRV6s8SqMfSGCtECDvdMd",
-                category: "ai-infra",
-                badge: "trending"
-            },
-            {
-                name: "AIMONICA",
-                symbol: "AIMONICA",
-                address: "FbUy1NubUtCfoif7TAr6wAtaeRPHiG4SXHZi7N1Fpump",
-                category: "ai-agent",
-                badge: "new"
-            },
-            {
-                name: "ALCH",
-                symbol: "ALCH",
-                address: "7GtEETp2E9e7gSyMyjNgaWWvpNdNbArLSiKFqLrpump",
-                category: "ai-agent",
-                badge: "new"
-            },
-            {
-                name: "ACT",
-                symbol: "ACT",
-                address: "GJAFwWjJ3vnTsrQVabjBVK2TYB1YtRCQXRDfDgUnpump",
-                category: "ai-agent",
-                badge: "trending"
-            },
-            {
-                name: "CHAOS",
-                symbol: "CHAOS",
-                address: "8SgNwESovnbG1oNEaPVhg6CR9mTMSK7jPvcYRe3wpump",
-                category: "ai-agent",
-                badge: "new"
-            },
-            {
-                name: "HAT",
-                symbol: "HAT",
-                address: "5y1MKwJHQPgUQpJGS9V5c2mfBDfQvpQ2KqKZWaLapump",
-                category: "ai-meme",
-                badge: "trending"
-            },
-            {
-                name: "DegenAI",
-                symbol: "DEGENAI",
-                address: "Gu3LDkn7Vx3bmCzLafYNKcDxv2mH7YN44NJZFXnypump",
+                name: "ARC",
+                symbol: "ARC",
+                address: "61V8vBaqAGMpgDQi4JcAwo1dmBGHsyhzodcPqnEVpump",
                 category: "ai-agent",
                 badge: "hot"
             }
         ];
 
-        // Additional potential gems to discover
-        const POTENTIAL_KEYWORDS = ['AI', 'GPT', 'AGI', 'NEURAL', 'BRAIN', 'BOT', 'AGENT', 'LLM', 'ML'];
+        // Search terms for auto-discovering new gems
+        const DISCOVERY_KEYWORDS = ['pump', 'ai agent', 'meme solana', 'new token solana'];
 
         let currentFilter = 'all';
         let gemsData = [];
@@ -854,49 +772,97 @@
             updateLastRefresh();
         }
 
-        // Search for new AI gems
+        // Search for new AI gems - Auto-discovery from multiple sources
         async function searchNewGems() {
             const container = document.getElementById('new-gems-container');
+            container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Scanning for pumping gems...</p></div>';
 
             try {
-                // Search for new tokens using DexScreener search
-                const response = await fetch('https://api.dexscreener.com/latest/dex/search?q=ai%20solana');
-                const data = await response.json();
+                // Search multiple keywords to find trending tokens
+                const searchTerms = ['pump solana', 'new solana', 'trending solana meme', 'ai solana'];
+                const allPairs = [];
 
-                if (data.pairs && data.pairs.length > 0) {
-                    // Filter for Solana pairs only and exclude already tracked gems
-                    const existingAddresses = AI_GEMS.map(g => g.address.toLowerCase());
-                    const newGems = data.pairs
-                        .filter(pair =>
-                            pair.chainId === 'solana' &&
-                            !existingAddresses.includes(pair.baseToken.address.toLowerCase()) &&
-                            parseFloat(pair.liquidity?.usd || 0) > 10000
-                        )
-                        .slice(0, 8)
-                        .map(pair => ({
+                for (const term of searchTerms) {
+                    try {
+                        const response = await fetch(`https://api.dexscreener.com/latest/dex/search?q=${encodeURIComponent(term)}`);
+                        const data = await response.json();
+                        if (data.pairs) allPairs.push(...data.pairs);
+                    } catch (e) {
+                        console.log(`Search for ${term} failed`);
+                    }
+                }
+
+                // Also fetch trending/boosted tokens
+                try {
+                    const trendingResponse = await fetch('https://api.dexscreener.com/token-boosts/top/v1');
+                    const trendingData = await trendingResponse.json();
+                    if (Array.isArray(trendingData)) {
+                        for (const token of trendingData.filter(t => t.chainId === 'solana').slice(0, 10)) {
+                            try {
+                                const tokenResponse = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${token.tokenAddress}`);
+                                const tokenData = await tokenResponse.json();
+                                if (tokenData.pairs) allPairs.push(...tokenData.pairs);
+                            } catch (e) {}
+                        }
+                    }
+                } catch (e) {
+                    console.log('Trending fetch failed');
+                }
+
+                // Filter and deduplicate
+                const existingAddresses = AI_GEMS.map(g => g.address.toLowerCase());
+                const seen = new Set();
+                const newGems = allPairs
+                    .filter(pair => {
+                        if (!pair || pair.chainId !== 'solana') return false;
+                        const addr = pair.baseToken?.address?.toLowerCase();
+                        if (!addr || seen.has(addr) || existingAddresses.includes(addr)) return false;
+                        seen.add(addr);
+
+                        // Must have decent liquidity and volume
+                        const liq = parseFloat(pair.liquidity?.usd || 0);
+                        const vol = parseFloat(pair.volume?.h24 || 0);
+                        const change = parseFloat(pair.priceChange?.h24 || 0);
+
+                        return liq > 5000 && vol > 1000;
+                    })
+                    .sort((a, b) => {
+                        // Sort by 24h price change (biggest gainers first)
+                        const changeA = parseFloat(a.priceChange?.h24 || 0);
+                        const changeB = parseFloat(b.priceChange?.h24 || 0);
+                        return changeB - changeA;
+                    })
+                    .slice(0, 12)
+                    .map(pair => {
+                        const change = parseFloat(pair.priceChange?.h24 || 0);
+                        let badge = 'new';
+                        if (change > 50) badge = 'hot';
+                        else if (change > 20) badge = 'trending';
+
+                        return {
                             name: pair.baseToken.name,
                             symbol: pair.baseToken.symbol,
                             address: pair.baseToken.address,
                             price: parseFloat(pair.priceUsd) || 0,
-                            priceChange24h: parseFloat(pair.priceChange?.h24) || 0,
+                            priceChange24h: change,
                             volume24h: parseFloat(pair.volume?.h24) || 0,
                             marketCap: parseFloat(pair.marketCap) || parseFloat(pair.fdv) || 0,
                             liquidity: parseFloat(pair.liquidity?.usd) || 0,
                             imageUrl: pair.info?.imageUrl || null,
-                            badge: 'new',
-                            category: 'ai-discovery'
-                        }));
+                            badge: badge,
+                            category: 'discovery'
+                        };
+                    });
 
-                    if (newGems.length > 0) {
-                        container.innerHTML = newGems.map(createGemCard).join('');
-                        document.getElementById('new-gems-count').textContent = newGems.length;
-                    } else {
-                        container.innerHTML = '<p style="color: #8892b0; text-align: center; padding: 40px;">No new AI gems discovered recently. Check back later!</p>';
-                    }
+                if (newGems.length > 0) {
+                    container.innerHTML = newGems.map(createGemCard).join('');
+                    document.getElementById('new-gems-count').textContent = newGems.length;
+                } else {
+                    container.innerHTML = '<p style="color: #8892b0; text-align: center; padding: 40px;">No new gems discovered. Refresh to scan again!</p>';
                 }
             } catch (error) {
                 console.error('Error searching for new gems:', error);
-                container.innerHTML = '<p style="color: #8892b0; text-align: center; padding: 40px;">Unable to fetch new discoveries. Please try again later.</p>';
+                container.innerHTML = '<p style="color: #8892b0; text-align: center; padding: 40px;">Unable to fetch discoveries. Click Refresh to try again.</p>';
             }
         }
 
@@ -972,6 +938,52 @@
         function refreshPrices() {
             fetchAllGemsData();
             searchNewGems();
+        }
+
+        // Add custom token by contract address
+        async function addCustomToken() {
+            const input = document.getElementById('search-input').value.trim();
+
+            // Check if input looks like a Solana address (32-44 chars, base58)
+            if (input.length >= 32 && input.length <= 50 && /^[1-9A-HJ-NP-Za-km-z]+$/.test(input)) {
+                const container = document.getElementById('gems-container');
+                container.innerHTML = '<div class="loading"><div class="loading-spinner"></div><p>Fetching token data...</p></div>';
+
+                try {
+                    const data = await fetchTokenData(input);
+                    if (data && data.price) {
+                        // Fetch token info
+                        const response = await fetch(`https://api.dexscreener.com/latest/dex/tokens/${input}`);
+                        const tokenData = await response.json();
+
+                        if (tokenData.pairs && tokenData.pairs.length > 0) {
+                            const pair = tokenData.pairs[0];
+                            const newGem = {
+                                name: pair.baseToken.name,
+                                symbol: pair.baseToken.symbol,
+                                address: input,
+                                category: 'custom',
+                                badge: 'new',
+                                ...data
+                            };
+
+                            // Add to beginning of array
+                            gemsData.unshift(newGem);
+                            renderGems();
+                            updateStats();
+                            alert(`Added ${newGem.name} (${newGem.symbol}) to your dashboard!`);
+                        }
+                    } else {
+                        alert('Token not found or has no liquidity. Make sure the address is correct.');
+                        renderGems();
+                    }
+                } catch (error) {
+                    alert('Error fetching token. Please check the address and try again.');
+                    renderGems();
+                }
+            } else {
+                alert('Please paste a valid Solana contract address (32-44 characters)');
+            }
         }
 
         // Initialize
