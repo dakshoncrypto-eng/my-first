@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFA Level 2 Mastery Platform | Your Path to Success</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Motivational Overlay -->
+    <div id="motivationOverlay" class="motivation-overlay">
+        <div class="motivation-content">
+            <div class="motivation-icon">🎯</div>
+            <h2 id="motivationTitle">Welcome Back, Future Charterholder!</h2>
+            <p id="motivationText">Every expert was once a beginner. Your dedication today shapes your success tomorrow.</p>
+            <button onclick="closeMotivation()" class="btn-primary">Let's Crush It Today!</button>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">📊</span>
+            <span class="brand-text">CFA L2 <span class="highlight">Mastery</span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                <i class="fas fa-home"></i> Dashboard
+            </a>
+            <a href="#schedule" class="nav-link" data-section="schedule">
+                <i class="fas fa-calendar-alt"></i> Schedule
+            </a>
+            <a href="#topics" class="nav-link" data-section="topics">
+                <i class="fas fa-book"></i> Topics
+            </a>
+            <a href="#practice" class="nav-link" data-section="practice">
+                <i class="fas fa-pencil-alt"></i> Practice
+            </a>
+            <a href="#mocks" class="nav-link" data-section="mocks">
+                <i class="fas fa-file-alt"></i> Mocks
+            </a>
+            <a href="#formulas" class="nav-link" data-section="formulas">
+                <i class="fas fa-square-root-alt"></i> Formulas
+            </a>
+        </div>
+        <div class="nav-streak">
+            <div class="streak-badge">
+                <i class="fas fa-fire"></i>
+                <span id="streakCount">0</span>
+            </div>
+            <span class="streak-label">Day Streak</span>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="dashboard-header">
+                <div class="welcome-card">
+                    <div class="welcome-text">
+                        <h1>Your CFA Level 2 Journey</h1>
+                        <p class="subtitle">Personalized study plan based on your exam results</p>
+                    </div>
+                    <div class="exam-countdown">
+                        <div class="countdown-number" id="daysRemaining">147</div>
+                        <div class="countdown-label">Days Until May 2026 Exam</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon progress-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="overallProgress">0%</span>
+                        <span class="stat-label">Overall Progress</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon study-icon"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="studyHours">0</span>
+                        <span class="stat-label">Study Hours</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon questions-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="questionsCompleted">0</span>
+                        <span class="stat-label">Questions Done</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon accuracy-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-value" id="accuracy">0%</span>
+                        <span class="stat-label">Accuracy Rate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Analysis -->
+            <div class="performance-section">
+                <h2 class="section-title"><i class="fas fa-chart-bar"></i> Your Performance Analysis</h2>
+                <p class="section-subtitle">Based on your exam results - Focus areas highlighted</p>
+
+                <div class="performance-grid">
+                    <!-- Critical Focus Topics -->
+                    <div class="topic-performance critical">
+                        <div class="topic-header">
+                            <span class="topic-name">Quantitative Methods</span>
+                            <span class="topic-badge badge-critical">CRITICAL</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 35%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">35% Score</span>
+                            <span class="weight">Weight: 5-10%</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-performance critical">
+                        <div class="topic-header">
+                            <span class="topic-name">Financial Statement Analysis</span>
+                            <span class="topic-badge badge-critical">CRITICAL</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">40% Score</span>
+                            <span class="weight">Weight: 10-15%</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-performance critical">
+                        <div class="topic-header">
+                            <span class="topic-name">Derivatives</span>
+                            <span class="topic-badge badge-critical">CRITICAL</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 38%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">38% Score</span>
+                            <span class="weight">Weight: 5-10%</span>
+                        </div>
+                    </div>
+
+                    <!-- Needs Improvement -->
+                    <div class="topic-performance warning">
+                        <div class="topic-header">
+                            <span class="topic-name">Corporate Issuers</span>
+                            <span class="topic-badge badge-warning">IMPROVE</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 52%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">52% Score</span>
+                            <span class="weight">Weight: 5-10%</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-performance warning">
+                        <div class="topic-header">
+                            <span class="topic-name">Equity Investments</span>
+                            <span class="topic-badge badge-warning">IMPROVE</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 55%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">55% Score</span>
+                            <span class="weight">Weight: 10-15%</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-performance warning">
+                        <div class="topic-header">
+                            <span class="topic-name">Alternative Investments</span>
+                            <span class="topic-badge badge-warning">IMPROVE</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 50%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">50% Score</span>
+                            <span class="weight">Weight: 5-10%</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-performance warning">
+                        <div class="topic-header">
+                            <span class="topic-name">Portfolio Management</span>
+                            <span class="topic-badge badge-warning">IMPROVE</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 48%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">48% Score</span>
+                            <span class="weight">Weight: 10-15%</span>
+                        </div>
+                    </div>
+
+                    <!-- Stronger Areas -->
+                    <div class="topic-performance good">
+                        <div class="topic-header">
+                            <span class="topic-name">Ethics & Professional Standards</span>
+                            <span class="topic-badge badge-good">MAINTAIN</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 62%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">62% Score</span>
+                            <span class="weight">Weight: 10-15%</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-performance good">
+                        <div class="topic-header">
+                            <span class="topic-name">Economics</span>
+                            <span class="topic-badge badge-good">MAINTAIN</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 68%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">68% Score</span>
+                            <span class="weight">Weight: 5-10%</span>
+                        </div>
+                    </div>
+
+                    <div class="topic-performance good">
+                        <div class="topic-header">
+                            <span class="topic-name">Fixed Income</span>
+                            <span class="topic-badge badge-good">MAINTAIN</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%"></div>
+                        </div>
+                        <div class="topic-meta">
+                            <span class="score">65% Score</span>
+                            <span class="weight">Weight: 10-15%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Tasks -->
+            <div class="today-section">
+                <h2 class="section-title"><i class="fas fa-tasks"></i> Today's Study Plan</h2>
+                <div class="tasks-container" id="todayTasks">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Motivational Quote -->
+            <div class="quote-card">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <p id="dailyQuote">"The only way to do great work is to love what you do."</p>
+                <span class="quote-author">- Steve Jobs</span>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="section">
+            <div class="schedule-header">
+                <h1><i class="fas fa-calendar-alt"></i> Your 5-Month Study Schedule</h1>
+                <p class="subtitle">Personalized daily plan optimized for your weak areas</p>
+            </div>
+
+            <!-- Weekly Overview -->
+            <div class="week-overview">
+                <h2 class="section-title">This Week's Focus</h2>
+                <div class="week-grid" id="weekGrid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Phase Overview -->
+            <div class="phases-section">
+                <h2 class="section-title">Study Phases</h2>
+                <div class="phases-grid">
+                    <div class="phase-card phase-1">
+                        <div class="phase-header">
+                            <span class="phase-number">Phase 1</span>
+                            <span class="phase-duration">Weeks 1-8</span>
+                        </div>
+                        <h3>Foundation Building</h3>
+                        <p>Focus on CRITICAL areas: Quant Methods, FSA, Derivatives</p>
+                        <ul class="phase-tasks">
+                            <li>Complete all readings for weak topics</li>
+                            <li>500+ practice questions per topic</li>
+                            <li>Build formula sheets</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card phase-2">
+                        <div class="phase-header">
+                            <span class="phase-number">Phase 2</span>
+                            <span class="phase-duration">Weeks 9-14</span>
+                        </div>
+                        <h3>Comprehensive Review</h3>
+                        <p>Cover all topics, strengthen weak areas</p>
+                        <ul class="phase-tasks">
+                            <li>Complete remaining curriculum</li>
+                            <li>1000+ practice questions</li>
+                            <li>Topic-specific mocks</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card phase-3">
+                        <div class="phase-header">
+                            <span class="phase-number">Phase 3</span>
+                            <span class="phase-duration">Weeks 15-18</span>
+                        </div>
+                        <h3>Mock Exam Phase</h3>
+                        <p>Full-length exams and targeted review</p>
+                        <ul class="phase-tasks">
+                            <li>6+ full mock exams</li>
+                            <li>Detailed error analysis</li>
+                            <li>Formula memorization</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card phase-4">
+                        <div class="phase-header">
+                            <span class="phase-number">Phase 4</span>
+                            <span class="phase-duration">Final 2 Weeks</span>
+                        </div>
+                        <h3>Final Sprint</h3>
+                        <p>Polish and confidence building</p>
+                        <ul class="phase-tasks">
+                            <li>Ethics intensive review</li>
+                            <li>Quick formula review</li>
+                            <li>Light practice, mental prep</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Schedule Template -->
+            <div class="daily-template">
+                <h2 class="section-title">Recommended Daily Schedule</h2>
+                <div class="schedule-timeline">
+                    <div class="timeline-item">
+                        <div class="time-slot">6:00 AM</div>
+                        <div class="activity">
+                            <h4>Morning Review</h4>
+                            <p>Formula cards & key concepts (30 min)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-slot">7:00 AM</div>
+                        <div class="activity">
+                            <h4>Primary Study Session</h4>
+                            <p>Focus topic reading & notes (2 hrs)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-slot">12:00 PM</div>
+                        <div class="activity">
+                            <h4>Lunch Break Practice</h4>
+                            <p>20-30 practice questions (45 min)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-slot">6:00 PM</div>
+                        <div class="activity">
+                            <h4>Evening Session</h4>
+                            <p>Practice problems & review (2 hrs)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-slot">9:00 PM</div>
+                        <div class="activity">
+                            <h4>Quick Review</h4>
+                            <p>Day's concepts summary (30 min)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topics Section -->
+        <section id="topics" class="section">
+            <div class="topics-header">
+                <h1><i class="fas fa-book"></i> Study Topics</h1>
+                <p class="subtitle">Comprehensive materials for all CFA Level 2 topics</p>
+            </div>
+
+            <div class="topics-filter">
+                <button class="filter-btn active" data-filter="all">All Topics</button>
+                <button class="filter-btn critical-filter" data-filter="critical">Critical Focus</button>
+                <button class="filter-btn warning-filter" data-filter="warning">Needs Improvement</button>
+                <button class="filter-btn good-filter" data-filter="good">Maintain</button>
+            </div>
+
+            <div class="topics-grid" id="topicsGrid">
+                <!-- Topic cards will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Topic Detail Modal -->
+        <div id="topicModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTopicTitle">Topic Title</h2>
+                    <button class="close-modal" onclick="closeTopicModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="modalTopicContent">
+                    <!-- Content populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Practice Section -->
+        <section id="practice" class="section">
+            <div class="practice-header">
+                <h1><i class="fas fa-pencil-alt"></i> Practice Questions</h1>
+                <p class="subtitle">Topic-wise practice with detailed explanations</p>
+            </div>
+
+            <div class="practice-stats">
+                <div class="practice-stat">
+                    <span class="stat-number" id="totalQuestions">2,500+</span>
+                    <span class="stat-text">Questions Available</span>
+                </div>
+                <div class="practice-stat">
+                    <span class="stat-number" id="completedQuestions">0</span>
+                    <span class="stat-text">Completed</span>
+                </div>
+                <div class="practice-stat">
+                    <span class="stat-number" id="correctRate">0%</span>
+                    <span class="stat-text">Correct Rate</span>
+                </div>
+            </div>
+
+            <div class="practice-modes">
+                <div class="mode-card" onclick="startPractice('topic')">
+                    <div class="mode-icon"><i class="fas fa-book-open"></i></div>
+                    <h3>Topic Practice</h3>
+                    <p>Practice questions by specific topic</p>
+                </div>
+                <div class="mode-card" onclick="startPractice('weak')">
+                    <div class="mode-icon weak-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h3>Weak Areas Focus</h3>
+                    <p>Questions from your critical topics</p>
+                </div>
+                <div class="mode-card" onclick="startPractice('random')">
+                    <div class="mode-icon random-icon"><i class="fas fa-random"></i></div>
+                    <h3>Random Mix</h3>
+                    <p>Mixed questions from all topics</p>
+                </div>
+                <div class="mode-card" onclick="startPractice('timed')">
+                    <div class="mode-icon timed-icon"><i class="fas fa-stopwatch"></i></div>
+                    <h3>Timed Practice</h3>
+                    <p>Simulate exam conditions</p>
+                </div>
+            </div>
+
+            <!-- Practice Interface -->
+            <div id="practiceInterface" class="practice-interface hidden">
+                <div class="practice-progress">
+                    <span>Question <span id="currentQ">1</span> of <span id="totalQ">20</span></span>
+                    <div class="practice-timer" id="practiceTimer">03:00</div>
+                </div>
+
+                <div class="question-card">
+                    <div class="question-topic" id="questionTopic">Quantitative Methods</div>
+                    <div class="question-text" id="questionText">
+                        <!-- Question content here -->
+                    </div>
+                    <div class="answer-options" id="answerOptions">
+                        <!-- Options populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="practice-actions">
+                    <button class="btn-secondary" onclick="skipQuestion()">Skip</button>
+                    <button class="btn-primary" onclick="submitAnswer()" id="submitBtn">Submit Answer</button>
+                    <button class="btn-primary hidden" onclick="nextQuestion()" id="nextBtn">Next Question</button>
+                </div>
+
+                <div id="explanation" class="explanation hidden">
+                    <h4>Explanation</h4>
+                    <p id="explanationText"></p>
+                </div>
+            </div>
+
+            <!-- Topic Selection for Practice -->
+            <div id="topicSelection" class="topic-selection hidden">
+                <h2>Select Topic to Practice</h2>
+                <div class="topic-select-grid" id="topicSelectGrid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Mocks Section -->
+        <section id="mocks" class="section">
+            <div class="mocks-header">
+                <h1><i class="fas fa-file-alt"></i> Mock Exams</h1>
+                <p class="subtitle">Full-length practice exams simulating real CFA conditions</p>
+            </div>
+
+            <div class="mock-info">
+                <div class="info-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>4 Hours 24 Minutes</h3>
+                    <p>Total exam time (2 sessions)</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-list-ol"></i>
+                    <h3>88 Questions</h3>
+                    <p>Item sets with vignettes</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-trophy"></i>
+                    <h3>~65-70%</h3>
+                    <p>Target passing score</p>
+                </div>
+            </div>
+
+            <div class="mocks-grid">
+                <div class="mock-card" id="mock1">
+                    <div class="mock-header">
+                        <span class="mock-number">Mock 1</span>
+                        <span class="mock-status">Available</span>
+                    </div>
+                    <h3>Diagnostic Mock</h3>
+                    <p>Assess your current level before intensive study</p>
+                    <div class="mock-details">
+                        <span><i class="fas fa-question-circle"></i> 88 Questions</span>
+                        <span><i class="fas fa-clock"></i> 4h 24m</span>
+                    </div>
+                    <button class="btn-primary" onclick="startMock(1)">Start Mock</button>
+                </div>
+
+                <div class="mock-card" id="mock2">
+                    <div class="mock-header">
+                        <span class="mock-number">Mock 2</span>
+                        <span class="mock-status locked">Locked</span>
+                    </div>
+                    <h3>Foundation Check</h3>
+                    <p>After Phase 1 completion</p>
+                    <div class="mock-details">
+                        <span><i class="fas fa-question-circle"></i> 88 Questions</span>
+                        <span><i class="fas fa-clock"></i> 4h 24m</span>
+                    </div>
+                    <button class="btn-secondary" disabled>Complete Phase 1</button>
+                </div>
+
+                <div class="mock-card" id="mock3">
+                    <div class="mock-header">
+                        <span class="mock-number">Mock 3</span>
+                        <span class="mock-status locked">Locked</span>
+                    </div>
+                    <h3>Mid-Point Assessment</h3>
+                    <p>Halfway checkpoint</p>
+                    <div class="mock-details">
+                        <span><i class="fas fa-question-circle"></i> 88 Questions</span>
+                        <span><i class="fas fa-clock"></i> 4h 24m</span>
+                    </div>
+                    <button class="btn-secondary" disabled>Complete Phase 2</button>
+                </div>
+
+                <div class="mock-card" id="mock4">
+                    <div class="mock-header">
+                        <span class="mock-number">Mock 4</span>
+                        <span class="mock-status locked">Locked</span>
+                    </div>
+                    <h3>Full Simulation 1</h3>
+                    <p>Complete exam simulation</p>
+                    <div class="mock-details">
+                        <span><i class="fas fa-question-circle"></i> 88 Questions</span>
+                        <span><i class="fas fa-clock"></i> 4h 24m</span>
+                    </div>
+                    <button class="btn-secondary" disabled>Unlock Later</button>
+                </div>
+
+                <div class="mock-card" id="mock5">
+                    <div class="mock-header">
+                        <span class="mock-number">Mock 5</span>
+                        <span class="mock-status locked">Locked</span>
+                    </div>
+                    <h3>Full Simulation 2</h3>
+                    <p>Advanced difficulty</p>
+                    <div class="mock-details">
+                        <span><i class="fas fa-question-circle"></i> 88 Questions</span>
+                        <span><i class="fas fa-clock"></i> 4h 24m</span>
+                    </div>
+                    <button class="btn-secondary" disabled>Unlock Later</button>
+                </div>
+
+                <div class="mock-card" id="mock6">
+                    <div class="mock-header">
+                        <span class="mock-number">Mock 6</span>
+                        <span class="mock-status locked">Locked</span>
+                    </div>
+                    <h3>Final Prep</h3>
+                    <p>Last practice before exam</p>
+                    <div class="mock-details">
+                        <span><i class="fas fa-question-circle"></i> 88 Questions</span>
+                        <span><i class="fas fa-clock"></i> 4h 24m</span>
+                    </div>
+                    <button class="btn-secondary" disabled>Unlock Later</button>
+                </div>
+            </div>
+
+            <!-- Mock Results -->
+            <div class="mock-results" id="mockResults">
+                <h2 class="section-title">Your Mock Results</h2>
+                <div class="results-chart" id="resultsChart">
+                    <p class="no-results">Complete your first mock to see results here</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulas Section -->
+        <section id="formulas" class="section">
+            <div class="formulas-header">
+                <h1><i class="fas fa-square-root-alt"></i> Formula Sheets</h1>
+                <p class="subtitle">Essential formulas organized by topic - memorize these!</p>
+            </div>
+
+            <div class="formula-search">
+                <input type="text" id="formulaSearch" placeholder="Search formulas..." oninput="searchFormulas()">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="formulas-container" id="formulasContainer">
+                <!-- Populated by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab" onclick="toggleFabMenu()">
+            <i class="fas fa-plus"></i>
+        </button>
+        <div class="fab-menu hidden" id="fabMenu">
+            <button onclick="quickLog('study')" title="Log Study Time">
+                <i class="fas fa-clock"></i>
+            </button>
+            <button onclick="quickLog('question')" title="Log Questions">
+                <i class="fas fa-check"></i>
+            </button>
+            <button onclick="showNotes()" title="Quick Notes">
+                <i class="fas fa-sticky-note"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Notes Modal -->
+    <div id="notesModal" class="modal">
+        <div class="modal-content notes-modal">
+            <div class="modal-header">
+                <h2>Quick Notes</h2>
+                <button class="close-modal" onclick="closeNotes()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <textarea id="notesArea" placeholder="Jot down quick notes, insights, or things to review..."></textarea>
+                <button class="btn-primary" onclick="saveNotes()">Save Notes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Log Modal -->
+    <div id="logModal" class="modal">
+        <div class="modal-content log-modal">
+            <div class="modal-header">
+                <h2 id="logTitle">Log Progress</h2>
+                <button class="close-modal" onclick="closeLog()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="studyLogForm">
+                    <label>Study Time (minutes)</label>
+                    <input type="number" id="studyMinutes" min="1" max="480" value="60">
+                    <label>Topic Studied</label>
+                    <select id="studyTopic">
+                        <option value="quant">Quantitative Methods</option>
+                        <option value="fsa">Financial Statement Analysis</option>
+                        <option value="derivatives">Derivatives</option>
+                        <option value="equity">Equity Investments</option>
+                        <option value="fixed">Fixed Income</option>
+                        <option value="corporate">Corporate Issuers</option>
+                        <option value="alt">Alternative Investments</option>
+                        <option value="portfolio">Portfolio Management</option>
+                        <option value="ethics">Ethics</option>
+                        <option value="econ">Economics</option>
+                    </select>
+                    <button class="btn-primary" onclick="logStudyTime()">Log Time</button>
+                </div>
+                <div id="questionLogForm" class="hidden">
+                    <label>Questions Completed</label>
+                    <input type="number" id="questionCount" min="1" max="500" value="20">
+                    <label>Correct Answers</label>
+                    <input type="number" id="correctCount" min="0" max="500" value="15">
+                    <button class="btn-primary" onclick="logQuestions()">Log Questions</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Toast -->
+    <div id="achievementToast" class="achievement-toast hidden">
+        <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+        <div class="achievement-text">
+            <span class="achievement-title">Achievement Unlocked!</span>
+            <span class="achievement-desc" id="achievementDesc">First Study Session</span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
